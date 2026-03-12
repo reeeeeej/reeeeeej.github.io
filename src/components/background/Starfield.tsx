@@ -5,9 +5,9 @@ interface StarfieldProps {
 }
 
 const profileStarCount: Record<DeviceProfile, number> = {
-  'mobile-low': 18,
-  'mobile-mid': 28,
-  'mobile-high': 42,
+  'mobile-low': 12,
+  'mobile-mid': 20,
+  'mobile-high': 30,
   desktop: 64,
 };
 

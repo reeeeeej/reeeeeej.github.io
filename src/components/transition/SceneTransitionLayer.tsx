@@ -7,10 +7,17 @@ interface SceneTransitionLayerProps {
 }
 
 const particleCountByProfile: Record<DeviceProfile, number> = {
-  'mobile-low': 8,
-  'mobile-mid': 10,
-  'mobile-high': 14,
-  desktop: 20,
+  'mobile-low': 4,
+  'mobile-mid': 6,
+  'mobile-high': 8,
+  desktop: 16,
+};
+
+const streamCountByProfile: Record<DeviceProfile, number> = {
+  'mobile-low': 0,
+  'mobile-mid': 1,
+  'mobile-high': 2,
+  desktop: 3,
 };
 
 const particleTones = ['moon', 'ice', 'violet', 'rose'] as const;
@@ -29,6 +36,7 @@ export function SceneTransitionLayer({
   }
 
   const count = particleCountByProfile[profile];
+  const streamCount = streamCountByProfile[profile];
 
   return (
     <div
@@ -72,7 +80,7 @@ export function SceneTransitionLayer({
           );
         })}
 
-        {Array.from({ length: 3 }, (_, index) => (
+        {Array.from({ length: streamCount }, (_, index) => (
           <span
             key={`stream-${index}`}
             className={`scene-transition-layer__stream scene-transition-layer__stream--${index + 1}`}

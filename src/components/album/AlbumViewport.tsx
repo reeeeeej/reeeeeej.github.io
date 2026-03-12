@@ -24,25 +24,25 @@ const profileConfig: Record<
   }
 > = {
   'mobile-low': {
-    outlineCount: 42,
-    ambientCount: 14,
-    dustCount: 8,
-    sparkleCount: 8,
-    monogramParticleCount: 18,
+    outlineCount: 28,
+    ambientCount: 8,
+    dustCount: 4,
+    sparkleCount: 4,
+    monogramParticleCount: 12,
   },
   'mobile-mid': {
-    outlineCount: 50,
-    ambientCount: 18,
-    dustCount: 10,
-    sparkleCount: 10,
-    monogramParticleCount: 22,
+    outlineCount: 36,
+    ambientCount: 12,
+    dustCount: 6,
+    sparkleCount: 6,
+    monogramParticleCount: 16,
   },
   'mobile-high': {
-    outlineCount: 58,
-    ambientCount: 24,
-    dustCount: 12,
-    sparkleCount: 13,
-    monogramParticleCount: 28,
+    outlineCount: 46,
+    ambientCount: 16,
+    dustCount: 8,
+    sparkleCount: 9,
+    monogramParticleCount: 20,
   },
   desktop: {
     outlineCount: 68,
@@ -252,20 +252,20 @@ export function AlbumViewport({
           <div className="album-viewport__monogram" aria-hidden="true">
             <svg
               className="album-viewport__monogram-svg"
-              viewBox="0 0 190 110"
+              viewBox="0 0 220 120"
               role="presentation"
             >
               <path
                 className="album-viewport__monogram-stroke"
-                d="M18 82C18 54 24 30 43 30C57 30 66 43 66 60V82C66 84 68 86 70 86C73 86 75 84 75 80V55C75 40 84 30 99 30C116 30 126 44 126 63V82"
+                d="M16 92C16 62 23 35 45 35C61 35 70 48 70 67V92C70 95 72 97 75 97C79 97 82 95 82 91V62C82 45 94 34 111 34C131 34 143 49 143 70V92"
               />
               <path
                 className="album-viewport__monogram-stroke"
-                d="M126 58C126 40 139 28 156 28C173 28 186 41 186 58C186 75 173 88 156 88C139 88 126 76 126 58Z"
+                d="M144 62C144 43 159 29 179 29C198 29 212 43 212 62C212 81 198 95 179 95C159 95 144 81 144 62Z"
               />
               <path
                 className="album-viewport__monogram-flourish"
-                d="M181 54C188 49 190 42 188 32"
+                d="M206 56C216 52 220 43 217 30"
               />
             </svg>
             {monogramDust.map((particle, index) => (

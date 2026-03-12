@@ -8,11 +8,11 @@ export function getDeviceProfile(
     return 'desktop';
   }
 
-  if (viewportWidth <= 390 || (deviceMemory !== undefined && deviceMemory <= 4)) {
+  if (viewportWidth <= 430 || (deviceMemory !== undefined && deviceMemory <= 6)) {
     return 'mobile-low';
   }
 
-  if (viewportWidth <= 480 || (deviceMemory !== undefined && deviceMemory <= 8)) {
+  if (viewportWidth <= 540 || (deviceMemory !== undefined && deviceMemory <= 8)) {
     return 'mobile-mid';
   }
 

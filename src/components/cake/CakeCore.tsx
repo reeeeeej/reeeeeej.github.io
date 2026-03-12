@@ -64,9 +64,9 @@ const tiers: TierConfig[] = [
 
 const particleTones = ['moon', 'ice', 'violet', 'rose'] as const;
 const profileDensityScale: Record<DeviceProfile, number> = {
-  'mobile-low': 0.42,
-  'mobile-mid': 0.56,
-  'mobile-high': 0.72,
+  'mobile-low': 0.28,
+  'mobile-mid': 0.38,
+  'mobile-high': 0.54,
   desktop: 1,
 };
 
@@ -252,18 +252,18 @@ export function CakeCore({ profile, transitionState }: CakeCoreProps) {
     profile === 'desktop'
       ? 14
       : profile === 'mobile-high'
-        ? 10
+        ? 7
         : profile === 'mobile-mid'
-          ? 7
-          : 5;
+          ? 4
+          : 2;
   const ringDotCount =
     profile === 'desktop'
       ? 42
       : profile === 'mobile-high'
-        ? 28
+        ? 18
         : profile === 'mobile-mid'
-          ? 20
-          : 16;
+          ? 12
+          : 8;
 
   return (
     <div
