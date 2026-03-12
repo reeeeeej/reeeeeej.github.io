@@ -1,12 +1,13 @@
 import type { AlbumCardItem } from '../../types/card';
 import { useHeartLayout3D } from '../../hooks/useHeartLayout3D';
-import type { SceneStage } from '../../types/scene';
+import type { DeviceProfile, SceneStage } from '../../types/scene';
 import { AlbumBackButton } from './AlbumBackButton';
 import { AlbumCardLayer } from './AlbumCardLayer';
 import { AlbumViewport } from './AlbumViewport';
 
 interface AlbumSceneProps {
   cards: AlbumCardItem[];
+  profile: DeviceProfile;
   selectedCardId: string | null;
   active: boolean;
   sceneStage: SceneStage;
@@ -18,6 +19,7 @@ interface AlbumSceneProps {
 
 export function AlbumScene({
   cards,
+  profile,
   selectedCardId,
   active,
   sceneStage,
@@ -46,11 +48,17 @@ export function AlbumScene({
         </p>
       </header>
 
-      <AlbumViewport active={active} entering={isEntering} exiting={isExiting}>
+      <AlbumViewport
+        active={active}
+        entering={isEntering}
+        exiting={isExiting}
+        profile={profile}
+      >
         {({ canOpenCard }) => (
           <>
             <AlbumCardLayer
               cards={backgroundCards}
+              profile={profile}
               depthGroup="background"
               entering={isEntering}
               exiting={isExiting}
@@ -60,6 +68,7 @@ export function AlbumScene({
             />
             <AlbumCardLayer
               cards={midgroundCards}
+              profile={profile}
               depthGroup="midground"
               entering={isEntering}
               exiting={isExiting}
@@ -69,6 +78,7 @@ export function AlbumScene({
             />
             <AlbumCardLayer
               cards={foregroundCards}
+              profile={profile}
               depthGroup="foreground"
               entering={isEntering}
               exiting={isExiting}

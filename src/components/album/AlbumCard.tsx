@@ -1,8 +1,10 @@
 import type { MouseEvent } from 'react';
 import type { HeartLayoutCard } from '../../hooks/useHeartLayout3D';
+import type { DeviceProfile } from '../../types/scene';
 
 interface AlbumCardProps {
   card: HeartLayoutCard;
+  profile: DeviceProfile;
   entering: boolean;
   exiting: boolean;
   entryIndex: number;
@@ -13,6 +15,7 @@ interface AlbumCardProps {
 
 export function AlbumCard({
   card,
+  profile,
   entering,
   exiting,
   entryIndex,
@@ -41,6 +44,9 @@ export function AlbumCard({
 
   const scaleByDepth =
     card.depthGroup === 'foreground' ? 1.03 : card.depthGroup === 'midground' ? 0.98 : 0.93;
+  const showDust =
+    profile === 'desktop' ||
+    (profile === 'mobile-high' && card.depthGroup !== 'background');
 
   return (
     <button
@@ -66,10 +72,14 @@ export function AlbumCard({
         <span
           className={`album-card__frame album-card__frame--${card.styleVariant ?? 'rose'}`}
         >
-          <span className="album-card__dust album-card__dust--top" />
-          <span className="album-card__dust album-card__dust--left" />
-          <span className="album-card__dust album-card__dust--right" />
-          <span className="album-card__dust album-card__dust--bottom" />
+          {showDust ? (
+            <>
+              <span className="album-card__dust album-card__dust--top" />
+              <span className="album-card__dust album-card__dust--left" />
+              <span className="album-card__dust album-card__dust--right" />
+              <span className="album-card__dust album-card__dust--bottom" />
+            </>
+          ) : null}
           <span className="album-card__photo-shell">
             <img
               className="album-card__image"

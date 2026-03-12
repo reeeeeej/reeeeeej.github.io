@@ -1,6 +1,8 @@
 import type { CSSProperties } from 'react';
+import type { DeviceProfile } from '../../types/scene';
 
 interface CakeCoreProps {
+  profile: DeviceProfile;
   transitionState: 'idle' | 'explode' | 'reform';
 }
 
@@ -61,6 +63,12 @@ const tiers: TierConfig[] = [
 ];
 
 const particleTones = ['moon', 'ice', 'violet', 'rose'] as const;
+const profileDensityScale: Record<DeviceProfile, number> = {
+  'mobile-low': 0.42,
+  'mobile-mid': 0.56,
+  'mobile-high': 0.72,
+  desktop: 1,
+};
 
 function seededUnit(seed: number) {
   return (Math.sin(seed) + 1) / 2;
@@ -230,7 +238,33 @@ function createBottomRim(tier: TierConfig, tierIndex: number) {
   });
 }
 
-export function CakeCore({ transitionState }: CakeCoreProps) {
+export function CakeCore({ profile, transitionState }: CakeCoreProps) {
+  const densityScale = profileDensityScale[profile];
+  const activeTiers = tiers.map((tier) => ({
+    ...tier,
+    fillCount: Math.max(16, Math.round(tier.fillCount * densityScale)),
+    sideColumns: Math.max(8, Math.round(tier.sideColumns * densityScale)),
+    sideRows: Math.max(4, Math.round(tier.sideRows * (0.84 + densityScale * 0.16))),
+    rimCount: Math.max(12, Math.round(tier.rimCount * densityScale)),
+    sparkCount: Math.max(8, Math.round(tier.sparkCount * densityScale)),
+  }));
+  const driftCount =
+    profile === 'desktop'
+      ? 14
+      : profile === 'mobile-high'
+        ? 10
+        : profile === 'mobile-mid'
+          ? 7
+          : 5;
+  const ringDotCount =
+    profile === 'desktop'
+      ? 42
+      : profile === 'mobile-high'
+        ? 28
+        : profile === 'mobile-mid'
+          ? 20
+          : 16;
+
   return (
     <div
       className={[
@@ -249,7 +283,7 @@ export function CakeCore({ transitionState }: CakeCoreProps) {
         <div className="cake-core__core-light cake-core__core-light--center" />
         <div className="cake-core__core-light cake-core__core-light--base" />
 
-        {tiers.map((tier) => (
+        {activeTiers.map((tier) => (
           <div key={`form-${tier.key}`} className={`cake-core__tier-form cake-core__tier-form--${tier.key}`}>
             <div className={`cake-core__volume cake-core__volume--${tier.key}`} />
             <div className={`cake-core__shape cake-core__shape--${tier.key}`} />
@@ -261,7 +295,7 @@ export function CakeCore({ transitionState }: CakeCoreProps) {
         ))}
 
         <div className="cake-core__particle-cloud">
-          {tiers.map((tier, tierIndex) => (
+          {activeTiers.map((tier, tierIndex) => (
             <div
               key={`particles-${tier.key}`}
               className={`cake-core__tier-particles cake-core__tier-particles--${tier.key}`}
@@ -274,7 +308,7 @@ export function CakeCore({ transitionState }: CakeCoreProps) {
             </div>
           ))}
 
-          {Array.from({ length: 14 }, (_, index) => {
+          {Array.from({ length: driftCount }, (_, index) => {
             const seed = index + 1;
             const left = 24 + seededUnit(seed * 12.7) * 52;
             const bottom = 24 + seededUnit(seed * 9.3) * 34;
@@ -309,8 +343,8 @@ export function CakeCore({ transitionState }: CakeCoreProps) {
 
       <div className="cake-core__ring" aria-hidden="true">
         <div className="cake-core__ring-line" />
-        {Array.from({ length: 42 }, (_, index) => {
-          const angle = (Math.PI * 2 * index) / 42;
+        {Array.from({ length: ringDotCount }, (_, index) => {
+          const angle = (Math.PI * 2 * index) / ringDotCount;
           const x = Math.cos(angle) * 40;
           const y = Math.sin(angle) * 12;
 

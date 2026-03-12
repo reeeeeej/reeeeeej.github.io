@@ -1,10 +1,11 @@
-import type { SceneConfig } from '../../types/scene';
+import type { DeviceProfile, SceneConfig } from '../../types/scene';
 import { HintText } from '../ui/HintText';
 import { CakeCore } from './CakeCore';
 import { CakeGlow } from './CakeGlow';
 
 interface CakeSceneProps {
   sceneConfig: SceneConfig;
+  profile: DeviceProfile;
   stage: 'cake' | 'transition-to-album' | 'transition-to-cake';
   onActivate: () => void;
   settling?: boolean;
@@ -13,6 +14,7 @@ interface CakeSceneProps {
 
 export function CakeScene({
   sceneConfig,
+  profile,
   stage,
   onActivate,
   settling = false,
@@ -53,6 +55,7 @@ export function CakeScene({
       >
         <CakeGlow />
         <CakeCore
+          profile={profile}
           transitionState={
             isTransitioningOut
               ? 'explode'

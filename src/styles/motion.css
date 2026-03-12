@@ -182,8 +182,8 @@
 @keyframes albumCardRise {
   0% {
     opacity: 0;
-    transform: translate3d(var(--card-shift-x, 0), var(--card-shift-y, 0), 0) scale(0.72);
-    filter: blur(10px);
+    transform: translate3d(var(--card-shift-x, 0), var(--card-shift-y, 0), 0) scale(0.8);
+    filter: blur(6px);
   }
 
   52% {
@@ -206,8 +206,8 @@
 
   100% {
     opacity: 0;
-    transform: translate3d(calc(var(--card-shift-x, 0) * -0.66), calc(var(--card-shift-y, 0) * -0.9), 0) scale(0.64);
-    filter: blur(10px);
+    transform: translate3d(calc(var(--card-shift-x, 0) * -0.54), calc(var(--card-shift-y, 0) * -0.74), 0) scale(0.76);
+    filter: blur(6px);
   }
 }
 
@@ -266,7 +266,7 @@
 @keyframes transitionScatter {
   0% {
     opacity: 0;
-    transform: translate3d(var(--transition-from-x), var(--transition-from-y), 0) scale(0.62);
+    transform: translate3d(var(--transition-from-x), var(--transition-from-y), 0) scale(0.72);
   }
 
   18% {
@@ -280,14 +280,14 @@
 
   100% {
     opacity: 0;
-    transform: translate3d(var(--transition-to-x), var(--transition-to-y), 0) scale(0.72);
+    transform: translate3d(var(--transition-to-x), var(--transition-to-y), 0) scale(0.82);
   }
 }
 
 @keyframes transitionGather {
   0% {
     opacity: 0;
-    transform: translate3d(var(--transition-to-x), var(--transition-to-y), 0) scale(0.58);
+    transform: translate3d(var(--transition-to-x), var(--transition-to-y), 0) scale(0.72);
   }
 
   20% {
@@ -301,7 +301,7 @@
 
   100% {
     opacity: 0;
-    transform: translate3d(var(--transition-from-x), var(--transition-from-y), 0) scale(0.54);
+    transform: translate3d(var(--transition-from-x), var(--transition-from-y), 0) scale(0.76);
   }
 }
 
@@ -583,12 +583,12 @@
 }
 
 .scene-transition-layer--to-album .scene-transition-layer__particle {
-  animation: transitionScatter 1.02s cubic-bezier(0.18, 0.68, 0.24, 1) both;
+  animation: transitionScatter 0.92s cubic-bezier(0.22, 0.68, 0.24, 1) both;
   animation-delay: var(--transition-delay, 0ms);
 }
 
 .scene-transition-layer--to-cake .scene-transition-layer__particle {
-  animation: transitionGather 1.08s cubic-bezier(0.22, 0.66, 0.2, 1) both;
+  animation: transitionGather 0.96s cubic-bezier(0.24, 0.66, 0.2, 1) both;
   animation-delay: var(--transition-delay, 0ms);
 }
 

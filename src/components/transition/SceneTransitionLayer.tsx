@@ -7,10 +7,10 @@ interface SceneTransitionLayerProps {
 }
 
 const particleCountByProfile: Record<DeviceProfile, number> = {
-  'mobile-low': 14,
-  'mobile-mid': 18,
-  'mobile-high': 22,
-  desktop: 26,
+  'mobile-low': 8,
+  'mobile-mid': 10,
+  'mobile-high': 14,
+  desktop: 20,
 };
 
 const particleTones = ['moon', 'ice', 'violet', 'rose'] as const;

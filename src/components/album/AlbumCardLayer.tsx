@@ -1,9 +1,11 @@
 import type { CardDepthGroup } from '../../types/card';
 import type { HeartLayoutCard } from '../../hooks/useHeartLayout3D';
+import type { DeviceProfile } from '../../types/scene';
 import { AlbumCard } from './AlbumCard';
 
 interface AlbumCardLayerProps {
   cards: HeartLayoutCard[];
+  profile: DeviceProfile;
   depthGroup: CardDepthGroup;
   entering: boolean;
   exiting: boolean;
@@ -20,6 +22,7 @@ const driftFactorByDepth: Record<CardDepthGroup, number> = {
 
 export function AlbumCardLayer({
   cards,
+  profile,
   depthGroup,
   entering,
   exiting,
@@ -43,6 +46,7 @@ export function AlbumCardLayer({
           <AlbumCard
             key={card.id}
             card={card}
+            profile={profile}
             entering={entering}
             exiting={exiting}
             entryIndex={index}

@@ -146,6 +146,7 @@ export function App() {
         {showCake ? (
           <CakeScene
             sceneConfig={sceneConfig}
+            profile={deviceProfile}
             stage={cakeVisualStage ?? 'cake'}
             settling={settleState === 'to-cake'}
             interactionLocked={transitionDirection !== null}
@@ -156,6 +157,7 @@ export function App() {
         {showAlbum ? (
           <AlbumScene
             cards={cards}
+            profile={deviceProfile}
             selectedCardId={selectedCardId}
             active={
               albumVisualState === 'active' || sceneStage === 'detail'

@@ -1,5 +1,6 @@
-import type { ReactNode } from 'react';
+import { useMemo, type ReactNode } from 'react';
 import { useAlbumRotation } from '../../hooks/useAlbumRotation';
+import type { DeviceProfile } from '../../types/scene';
 
 function heartCurve(t: number) {
   const x = 16 * Math.sin(t) ** 3;
@@ -12,39 +13,45 @@ function heartCurve(t: number) {
   return { x, y };
 }
 
-function createOutlineParticles() {
-  return Array.from({ length: 68 }, (_, index) => {
-    const progress = index / 68;
-    const t = 0.2 + progress * (Math.PI * 2 - 0.4);
-    const raw = heartCurve(t);
-    const point = {
-      x: raw.x / 17,
-      y: raw.y / 17,
-    };
-    const upper = Math.max(0, point.y);
-    const lower = Math.max(0, -point.y);
-    const lobeSpread = 1 + upper * 0.09 + Math.max(0, upper - 0.2) * 0.05;
-    const tailTighten = 1 - lower * 0.08;
-    const x = point.x * lobeSpread * tailTighten;
-    const y =
-      point.y >= 0
-        ? point.y * 1.02 + 0.01
-        : point.y * 0.86 + 0.03;
-    const scale = index % 3 === 0 ? 1.09 : index % 3 === 1 ? 1.03 : 0.98;
-    const offset = index % 2 === 0 ? -0.7 : 0.7;
-
-    return {
-      left: `${50 + x * 38.8 * scale}%`,
-      top: `${45.8 - y * 31.4 * scale + offset}%`,
-      size: index % 6 === 0 ? 4 : index % 3 === 0 ? 3 : 2,
-      opacity: index % 4 === 0 ? 0.8 : index % 2 === 0 ? 0.58 : 0.42,
-      blur: index % 5 === 0 ? '0.8px' : index % 3 === 0 ? '0.4px' : '0px',
-      delay: `${(index % 7) * 0.22}s`,
-    };
-  });
-}
-
-const outlineParticles = createOutlineParticles();
+const profileConfig: Record<
+  DeviceProfile,
+  {
+    outlineCount: number;
+    ambientCount: number;
+    dustCount: number;
+    sparkleCount: number;
+    monogramParticleCount: number;
+  }
+> = {
+  'mobile-low': {
+    outlineCount: 42,
+    ambientCount: 14,
+    dustCount: 8,
+    sparkleCount: 8,
+    monogramParticleCount: 18,
+  },
+  'mobile-mid': {
+    outlineCount: 50,
+    ambientCount: 18,
+    dustCount: 10,
+    sparkleCount: 10,
+    monogramParticleCount: 22,
+  },
+  'mobile-high': {
+    outlineCount: 58,
+    ambientCount: 24,
+    dustCount: 12,
+    sparkleCount: 13,
+    monogramParticleCount: 28,
+  },
+  desktop: {
+    outlineCount: 68,
+    ambientCount: 33,
+    dustCount: 16,
+    sparkleCount: 17,
+    monogramParticleCount: 34,
+  },
+};
 
 const ambientMotes = [
   { left: '11%', top: '18%', size: 7, delay: '0.2s', duration: '5.2s' },
@@ -80,7 +87,7 @@ const ambientMotes = [
   { left: '62%', top: '86%', size: 5, delay: '1.7s', duration: '5.6s' },
   { left: '45%', top: '88%', size: 4, delay: '0.9s', duration: '5.1s' },
   { left: '28%', top: '90%', size: 5, delay: '1.1s', duration: '5.8s' },
-];
+] as const;
 
 const backgroundSparkDust = [
   { left: '16%', top: '12%', size: 2, delay: '0.4s' },
@@ -99,20 +106,7 @@ const backgroundSparkDust = [
   { left: '63%', top: '68%', size: 2, delay: '1.8s' },
   { left: '74%', top: '74%', size: 3, delay: '0.7s' },
   { left: '49%', top: '83%', size: 2, delay: '1.4s' },
-];
-
-const monogramParticles = Array.from({ length: 90 }, (_, index) => {
-  const column = index % 10;
-  const row = Math.floor(index / 10);
-
-  return {
-    cx: 8 + column * 8.2 + (row % 2 === 0 ? 1.6 : -0.8),
-    cy: 14 + row * 7.2 + (column % 2 === 0 ? 1.2 : -1.2),
-    r: index % 6 === 0 ? 2.1 : index % 3 === 0 ? 1.6 : 1.2,
-    opacity: index % 4 === 0 ? 0.96 : index % 2 === 0 ? 0.74 : 0.5,
-    delay: `${(index % 9) * 0.16}s`,
-  };
-});
+] as const;
 
 const heartSparkles = [
   { left: '18%', top: '22%', size: 3, delay: '0s', trail: '18px', angle: '-18deg' },
@@ -132,7 +126,55 @@ const heartSparkles = [
   { left: '34%', top: '72%', size: 2, delay: '1.7s', trail: '14px', angle: '28deg' },
   { left: '65%', top: '72%', size: 2, delay: '0.7s', trail: '14px', angle: '-28deg' },
   { left: '50%', top: '82%', size: 4, delay: '1.9s', trail: '20px', angle: '90deg' },
-];
+] as const;
+
+function createOutlineParticles(count: number) {
+  return Array.from({ length: count }, (_, index) => {
+    const progress = index / count;
+    const t = 0.2 + progress * (Math.PI * 2 - 0.4);
+    const raw = heartCurve(t);
+    const point = {
+      x: raw.x / 17,
+      y: raw.y / 17,
+    };
+    const upper = Math.max(0, point.y);
+    const lower = Math.max(0, -point.y);
+    const lobeSpread = 1 + upper * 0.09 + Math.max(0, upper - 0.2) * 0.05;
+    const tailTighten = 1 - lower * 0.08;
+    const x = point.x * lobeSpread * tailTighten;
+    const y =
+      point.y >= 0
+        ? point.y * 1.02 + 0.01
+        : point.y * 0.86 + 0.03;
+    const scale = index % 3 === 0 ? 1.09 : index % 3 === 1 ? 1.03 : 0.98;
+    const offset = index % 2 === 0 ? -0.7 : 0.7;
+
+    return {
+      left: `${50 + x * 38.8 * scale}%`,
+      top: `${45.8 - y * 31.4 * scale + offset}%`,
+      size: index % 7 === 0 ? 4 : index % 3 === 0 ? 3 : 2,
+      opacity: index % 4 === 0 ? 0.8 : index % 2 === 0 ? 0.58 : 0.42,
+      blur: index % 5 === 0 ? '0.8px' : index % 3 === 0 ? '0.4px' : '0px',
+      delay: `${(index % 7) * 0.22}s`,
+    };
+  });
+}
+
+function createMonogramDust(count: number) {
+  return Array.from({ length: count }, (_, index) => {
+    const angle = (Math.PI * 2 * index) / count;
+    const radiusX = 34 + (index % 3) * 6;
+    const radiusY = 18 + (index % 4) * 4;
+
+    return {
+      left: `${50 + Math.cos(angle) * radiusX}%`,
+      top: `${50 + Math.sin(angle) * radiusY}%`,
+      size: index % 5 === 0 ? 4 : 3,
+      opacity: index % 2 === 0 ? 0.82 : 0.58,
+      delay: `${(index % 8) * 0.18}s`,
+    };
+  });
+}
 
 interface AlbumViewportRenderProps {
   canOpenCard: () => boolean;
@@ -142,6 +184,7 @@ interface AlbumViewportProps {
   active: boolean;
   entering: boolean;
   exiting: boolean;
+  profile: DeviceProfile;
   children: (controls: AlbumViewportRenderProps) => ReactNode;
 }
 
@@ -149,14 +192,25 @@ export function AlbumViewport({
   active,
   entering,
   exiting,
+  profile,
   children,
 }: AlbumViewportProps) {
   const { viewportRef, handlers, canOpenCard, isDragging } = useAlbumRotation(active);
+  const config = profileConfig[profile];
+  const outlineParticles = useMemo(
+    () => createOutlineParticles(config.outlineCount),
+    [config.outlineCount],
+  );
+  const monogramDust = useMemo(
+    () => createMonogramDust(config.monogramParticleCount),
+    [config.monogramParticleCount],
+  );
 
   return (
     <div
       ref={viewportRef}
       className={`album-viewport ${entering ? 'is-entering' : ''} ${exiting ? 'is-exiting' : ''} ${active ? 'is-active' : ''} ${isDragging ? 'is-dragging' : ''}`}
+      data-profile={profile}
       {...handlers}
     >
       <div className="album-viewport__stage">
@@ -165,7 +219,7 @@ export function AlbumViewport({
           <div className="album-viewport__glow album-viewport__glow--bottom" aria-hidden="true" />
           <div className="album-viewport__heart" aria-hidden="true" />
           <div className="album-viewport__ambient" aria-hidden="true">
-            {ambientMotes.map((mote, index) => (
+            {ambientMotes.slice(0, config.ambientCount).map((mote, index) => (
               <span
                 key={`${mote.left}-${mote.top}-${index}`}
                 className="album-viewport__ambient-mote"
@@ -181,7 +235,7 @@ export function AlbumViewport({
             ))}
           </div>
           <div className="album-viewport__dust" aria-hidden="true">
-            {backgroundSparkDust.map((dust, index) => (
+            {backgroundSparkDust.slice(0, config.dustCount).map((dust, index) => (
               <span
                 key={`${dust.left}-${dust.top}-${index}`}
                 className="album-viewport__dust-particle"
@@ -196,47 +250,21 @@ export function AlbumViewport({
             ))}
           </div>
           <div className="album-viewport__monogram" aria-hidden="true">
-            <svg
-              className="album-viewport__monogram-svg"
-              viewBox="0 0 100 84"
-              role="presentation"
-            >
-              <defs>
-                <clipPath id="album-mo-clip">
-                  <text
-                    x="50%"
-                    y="58%"
-                    textAnchor="middle"
-                    className="album-viewport__monogram-text"
-                  >
-                    mo
-                  </text>
-                </clipPath>
-              </defs>
-              <text
-                x="50%"
-                y="58%"
-                textAnchor="middle"
-                className="album-viewport__monogram-outline"
-              >
-                mo
-              </text>
-              <g clipPath="url(#album-mo-clip)">
-                {monogramParticles.map((particle, index) => (
-                  <circle
-                    key={`mo-particle-${index}`}
-                    className="album-viewport__monogram-particle"
-                    cx={particle.cx}
-                    cy={particle.cy}
-                    r={particle.r}
-                    style={{
-                      opacity: particle.opacity,
-                      animationDelay: particle.delay,
-                    }}
-                  />
-                ))}
-              </g>
-            </svg>
+            <span className="album-viewport__monogram-word">mo</span>
+            {monogramDust.map((particle, index) => (
+              <span
+                key={`mo-dust-${index}`}
+                className="album-viewport__monogram-dust"
+                style={{
+                  left: particle.left,
+                  top: particle.top,
+                  width: `${particle.size}px`,
+                  height: `${particle.size}px`,
+                  opacity: particle.opacity,
+                  animationDelay: particle.delay,
+                }}
+              />
+            ))}
           </div>
           <div className="album-viewport__outline-particles" aria-hidden="true">
             {outlineParticles.map((particle, index) => (
@@ -256,7 +284,7 @@ export function AlbumViewport({
             ))}
           </div>
           <div className="album-viewport__sparkles" aria-hidden="true">
-            {heartSparkles.map((sparkle, index) => (
+            {heartSparkles.slice(0, config.sparkleCount).map((sparkle, index) => (
               <span
                 key={`${sparkle.left}-${sparkle.top}-${index}`}
                 className="album-viewport__sparkle"

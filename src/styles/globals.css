@@ -311,8 +311,6 @@ img {
 }
 
 .cake-scene {
-  left: -10px;
-  right: -10px;
   display: grid;
   grid-template-rows: min-content 1fr min-content;
   justify-items: center;
@@ -367,6 +365,7 @@ img {
   align-self: start;
   max-width: 170px;
   margin-top: 0;
+  justify-self: center;
   opacity: 0.88;
   transition: opacity 420ms ease, transform 420ms ease;
 }
@@ -412,6 +411,7 @@ img {
   place-items: center;
   width: min(96vw, 470px);
   aspect-ratio: 1 / 1.1;
+  margin-inline: auto;
   margin-top: -6vh;
   border: 0;
   background: transparent;
@@ -1228,32 +1228,38 @@ img {
   opacity: 0.94;
 }
 
-.album-viewport__monogram-svg {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  filter:
-    drop-shadow(0 0 14px rgba(255, 225, 170, 0.2))
-    drop-shadow(0 0 28px rgba(191, 231, 255, 0.08));
-}
-
-.album-viewport__monogram-text,
-.album-viewport__monogram-outline {
+.album-viewport__monogram-word {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   font-family: 'Segoe Script', 'Snell Roundhand', 'Brush Script MT', cursive;
   font-size: 70px;
   font-weight: 600;
   letter-spacing: 0.02em;
+  line-height: 1;
+  color: rgba(255, 239, 214, 0.92);
+  text-shadow:
+    0 0 10px rgba(255, 224, 170, 0.2),
+    0 0 26px rgba(191, 231, 255, 0.08);
 }
 
-.album-viewport__monogram-outline {
-  fill: none;
-  stroke: rgba(255, 231, 188, 0.24);
-  stroke-width: 1px;
+.album-viewport__monogram-word::after {
+  content: 'mo';
+  position: absolute;
+  inset: 0;
+  color: transparent;
+  -webkit-text-stroke: 0.8px rgba(255, 231, 188, 0.18);
+  text-stroke: 0.8px rgba(255, 231, 188, 0.18);
 }
 
-.album-viewport__monogram-particle {
-  fill: rgba(255, 243, 220, 0.98);
-  filter: drop-shadow(0 0 4px rgba(255, 233, 186, 0.54));
+.album-viewport__monogram-dust {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 243, 220, 0.96);
+  box-shadow:
+    0 0 8px rgba(255, 233, 186, 0.42),
+    0 0 16px rgba(191, 231, 255, 0.08);
   animation: twinkle 3s ease-in-out infinite;
 }
 
@@ -1555,6 +1561,21 @@ img {
   background: rgba(10, 8, 18, 0.02);
   box-shadow: inset 0 0 0 1px rgba(255, 250, 241, 0.015);
   z-index: 1;
+}
+
+[data-profile='mobile-low'] .album-viewport__monogram {
+  width: 132px;
+  height: 112px;
+  top: 46%;
+}
+
+[data-profile='mobile-low'] .album-viewport__monogram-word {
+  font-size: 60px;
+}
+
+[data-profile='mobile-low'] .album-viewport__ambient-mote,
+[data-profile='mobile-low'] .album-viewport__dust-particle {
+  filter: none;
 }
 
 .album-card__image {
