@@ -252,20 +252,40 @@ export function AlbumViewport({
           <div className="album-viewport__monogram" aria-hidden="true">
             <svg
               className="album-viewport__monogram-svg"
-              viewBox="0 0 220 120"
+              viewBox="0 0 260 120"
               role="presentation"
             >
               <path
                 className="album-viewport__monogram-stroke"
-                d="M16 92C16 62 23 35 45 35C61 35 70 48 70 67V92C70 95 72 97 75 97C79 97 82 95 82 91V62C82 45 94 34 111 34C131 34 143 49 143 70V92"
+                d="M18 92C18 61 26 35 42 35C57 35 66 48 66 67V92C66 96 68 98 71 98C75 98 78 95 78 90V63C78 46 88 35 102 35C116 35 125 45 125 61V92"
               />
               <path
                 className="album-viewport__monogram-stroke"
-                d="M144 62C144 43 159 29 179 29C198 29 212 43 212 62C212 81 198 95 179 95C159 95 144 81 144 62Z"
+                d="M124 68C126 47 141 34 161 34C185 34 202 50 202 70C202 88 189 102 171 102C155 102 143 92 137 77"
               />
               <path
                 className="album-viewport__monogram-flourish"
-                d="M206 56C216 52 220 43 217 30"
+                d="M201 69C220 65 233 53 238 34"
+              />
+              <path
+                className="album-viewport__monogram-flourish"
+                d="M12 92C24 106 44 108 58 95"
+              />
+              <path
+                className="album-viewport__monogram-accent"
+                d="M55 29C61 20 72 16 84 17"
+              />
+              <path
+                className="album-viewport__monogram-accent"
+                d="M152 28C167 17 185 18 198 29"
+              />
+              <path
+                className="album-viewport__monogram-trace"
+                d="M18 92C18 61 26 35 42 35C57 35 66 48 66 67V92C66 96 68 98 71 98C75 98 78 95 78 90V63C78 46 88 35 102 35C116 35 125 45 125 61V92"
+              />
+              <path
+                className="album-viewport__monogram-trace"
+                d="M124 68C126 47 141 34 161 34C185 34 202 50 202 70C202 88 189 102 171 102C155 102 143 92 137 77"
               />
             </svg>
             {monogramDust.map((particle, index) => (
