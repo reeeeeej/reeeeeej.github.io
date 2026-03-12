@@ -5,15 +5,18 @@ interface StarfieldProps {
 }
 
 const profileStarCount: Record<DeviceProfile, number> = {
-  'mobile-low': 34,
-  'mobile-mid': 48,
-  'mobile-high': 62,
-  desktop: 76,
+  'mobile-low': 18,
+  'mobile-mid': 28,
+  'mobile-high': 42,
+  desktop: 64,
 };
 
 export function Starfield({ profile }: StarfieldProps) {
   const count = profileStarCount[profile];
-  const driftingStars = Math.max(8, Math.floor(count / 3));
+  const driftingStars =
+    profile === 'desktop'
+      ? Math.max(10, Math.floor(count / 3))
+      : Math.max(4, Math.floor(count / 4));
 
   return (
     <div className="starfield" aria-hidden="true">

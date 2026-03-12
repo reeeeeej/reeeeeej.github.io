@@ -6,10 +6,10 @@ interface ParticlesLayerProps {
 }
 
 const profileParticleCount: Record<DeviceProfile, number> = {
-  'mobile-low': 10,
-  'mobile-mid': 14,
-  'mobile-high': 18,
-  desktop: 22,
+  'mobile-low': 5,
+  'mobile-mid': 7,
+  'mobile-high': 10,
+  desktop: 16,
 };
 
 export function ParticlesLayer({

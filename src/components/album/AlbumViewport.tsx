@@ -250,7 +250,24 @@ export function AlbumViewport({
             ))}
           </div>
           <div className="album-viewport__monogram" aria-hidden="true">
-            <span className="album-viewport__monogram-word">mo</span>
+            <svg
+              className="album-viewport__monogram-svg"
+              viewBox="0 0 190 110"
+              role="presentation"
+            >
+              <path
+                className="album-viewport__monogram-stroke"
+                d="M18 82C18 54 24 30 43 30C57 30 66 43 66 60V82C66 84 68 86 70 86C73 86 75 84 75 80V55C75 40 84 30 99 30C116 30 126 44 126 63V82"
+              />
+              <path
+                className="album-viewport__monogram-stroke"
+                d="M126 58C126 40 139 28 156 28C173 28 186 41 186 58C186 75 173 88 156 88C139 88 126 76 126 58Z"
+              />
+              <path
+                className="album-viewport__monogram-flourish"
+                d="M181 54C188 49 190 42 188 32"
+              />
+            </svg>
             {monogramDust.map((particle, index) => (
               <span
                 key={`mo-dust-${index}`}

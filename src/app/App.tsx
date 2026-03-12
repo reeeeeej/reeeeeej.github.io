@@ -137,6 +137,7 @@ export function App() {
     <div
       className={`app-shell ${reducedMotionPreferred ? 'is-reduced-motion' : ''}`}
       data-scene-stage={sceneStage}
+      data-device-profile={deviceProfile}
       style={appTheme}
     >
       <Starfield profile={deviceProfile} />

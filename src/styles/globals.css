@@ -603,6 +603,7 @@ img {
 
 .cake-core__sculpture {
   inset: 0 6% 12%;
+  transform: translateX(-8px);
 }
 
 .cake-core__tier-particles {
@@ -1228,29 +1229,30 @@ img {
   opacity: 0.94;
 }
 
-.album-viewport__monogram-word {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  font-family: 'Segoe Script', 'Snell Roundhand', 'Brush Script MT', cursive;
-  font-size: 70px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  line-height: 1;
-  color: rgba(255, 239, 214, 0.92);
-  text-shadow:
-    0 0 10px rgba(255, 224, 170, 0.2),
-    0 0 26px rgba(191, 231, 255, 0.08);
+.album-viewport__monogram-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter:
+    drop-shadow(0 0 14px rgba(255, 225, 170, 0.2))
+    drop-shadow(0 0 28px rgba(191, 231, 255, 0.08));
 }
 
-.album-viewport__monogram-word::after {
-  content: 'mo';
-  position: absolute;
-  inset: 0;
-  color: transparent;
-  -webkit-text-stroke: 0.8px rgba(255, 231, 188, 0.18);
-  text-stroke: 0.8px rgba(255, 231, 188, 0.18);
+.album-viewport__monogram-stroke,
+.album-viewport__monogram-flourish {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.album-viewport__monogram-stroke {
+  stroke: rgba(255, 240, 215, 0.92);
+  stroke-width: 8;
+}
+
+.album-viewport__monogram-flourish {
+  stroke: rgba(255, 231, 188, 0.56);
+  stroke-width: 3.5;
 }
 
 .album-viewport__monogram-dust {
@@ -1569,13 +1571,36 @@ img {
   top: 46%;
 }
 
-[data-profile='mobile-low'] .album-viewport__monogram-word {
-  font-size: 60px;
-}
-
 [data-profile='mobile-low'] .album-viewport__ambient-mote,
 [data-profile='mobile-low'] .album-viewport__dust-particle {
   filter: none;
+}
+
+[data-device-profile='mobile-low'] .cake-core__aura,
+[data-device-profile='mobile-low'] .cake-core__mist,
+[data-device-profile='mobile-low'] .cake-core__volume,
+[data-device-profile='mobile-low'] .scene-transition-layer__flare--outer,
+[data-device-profile='mobile-low'] .scene-transition-layer__flare--inner,
+[data-device-profile='mobile-low'] .scene-transition-layer__core {
+  display: none;
+}
+
+[data-device-profile='mobile-low'] .cake-core__particle,
+[data-device-profile='mobile-low'] .cake-core__drift,
+[data-device-profile='mobile-low'] .cake-core__ring-dot,
+[data-device-profile='mobile-low'] .album-viewport__ambient-mote,
+[data-device-profile='mobile-low'] .album-viewport__dust-particle,
+[data-device-profile='mobile-low'] .album-viewport__outline-particle,
+[data-device-profile='mobile-low'] .album-viewport__sparkle,
+[data-device-profile='mobile-low'] .album-card__dust {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+}
+
+[data-device-profile='mobile-mid'] .album-viewport__ambient-mote,
+[data-device-profile='mobile-mid'] .album-viewport__dust-particle,
+[data-device-profile='mobile-mid'] .album-card__dust {
+  animation-duration: 4.8s;
 }
 
 .album-card__image {
