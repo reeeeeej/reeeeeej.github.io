@@ -1,0 +1,2 @@
+export const CAKE_TO_ALBUM_TRANSITION_MS = 1500;
+export const ALBUM_TO_CAKE_TRANSITION_MS = 1450;

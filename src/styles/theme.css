@@ -1,0 +1,16 @@
+:root {
+  --bg-base: #070711;
+  --bg-accent: #20133d;
+  --bg-glow: rgba(255, 190, 235, 0.34);
+  --cake-frosting: #ffd6f5;
+  --cake-highlight: #fff6fb;
+  --cake-shadow: #7f477d;
+  --text-primary: #fff7fb;
+  --text-secondary: #e9d8f5;
+  --surface-card: rgba(255, 247, 251, 0.1);
+  --surface-border: rgba(255, 255, 255, 0.18);
+  --surface-shadow: rgba(12, 8, 28, 0.34);
+  --accent-rose: #ff9fd7;
+  --accent-violet: #c6a0ff;
+  --accent-pearl: #ffe8c8;
+}
