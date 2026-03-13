@@ -1709,6 +1709,42 @@ img {
     0 0 14px rgba(255, 228, 176, 0.05);
 }
 
+[data-profile='mobile-low'] .album-card-layer,
+[data-profile='mobile-mid'] .album-card-layer,
+[data-profile='mobile-high'] .album-card-layer {
+  transform:
+    translate3d(
+      calc(var(--album-nx, 0) * var(--layer-drift-factor, 0) * 8px),
+      calc(var(--album-ny, 0) * var(--layer-drift-factor, 0) * 5px),
+      0
+    );
+}
+
+[data-profile='mobile-low'] .album-card__frame,
+[data-profile='mobile-mid'] .album-card__frame,
+[data-profile='mobile-high'] .album-card__frame {
+  box-shadow: 0 5px 12px rgba(8, 8, 22, 0.12);
+}
+
+[data-profile='mobile-low'] .album-card__shine,
+[data-profile='mobile-mid'] .album-card__shine {
+  display: none;
+}
+
+[data-profile='mobile-low'] .album-card--background .album-card__frame,
+[data-profile='mobile-mid'] .album-card--background .album-card__frame,
+[data-profile='mobile-high'] .album-card--background .album-card__frame {
+  opacity: 0.18;
+  filter: saturate(0.76) brightness(0.68);
+}
+
+[data-profile='mobile-low'] .album-card--midground .album-card__frame,
+[data-profile='mobile-mid'] .album-card--midground .album-card__frame,
+[data-profile='mobile-high'] .album-card--midground .album-card__frame {
+  opacity: 0.36;
+  filter: saturate(0.84) brightness(0.8);
+}
+
 .album-card.is-selected .album-card__frame,
 .album-card.is-interactive:hover .album-card__frame,
 .album-card.is-interactive:focus-visible .album-card__frame {
@@ -1871,21 +1907,19 @@ img {
 
 .card-detail-modal__body {
   display: grid;
-  gap: 18px;
+  gap: 10px;
   padding: 20px 20px 22px;
   background: linear-gradient(180deg, rgba(14, 12, 25, 0.98), rgba(10, 8, 18, 1));
 }
 
 .card-detail-modal__lyrics {
-  min-height: 92px;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  background: rgba(255, 255, 255, 0.03);
-  padding: 14px 16px;
+  min-height: 88px;
+  padding: 8px 6px 0;
   color: rgba(244, 240, 249, 0.84);
-  font-family: 'KaiTi', 'STKaiti', 'Kaiti SC', serif;
-  font-size: 0.94rem;
-  line-height: 1.75;
+  font-family: 'Times New Roman', 'KaiTi', 'STKaiti', 'Kaiti SC', serif;
+  font-size: 0.96rem;
+  line-height: 1.82;
+  text-align: center;
 }
 
 .card-detail-modal__lyrics:empty::before {
@@ -1894,22 +1928,63 @@ img {
   min-height: 64px;
 }
 
+.card-detail-modal__lyrics-lines {
+  display: grid;
+  gap: 6px;
+  justify-items: center;
+  width: min(100%, 240px);
+  margin: 0 auto;
+}
+
 .card-detail-modal__lyrics p {
   margin: 0;
   white-space: pre-wrap;
+  word-break: keep-all;
+  overflow-wrap: normal;
+  text-wrap: pretty;
+  width: 100%;
+}
+
+.card-detail-modal__lyrics p.is-latin {
+  font-family: 'Allura', 'Times New Roman', serif;
+  letter-spacing: 0.02em;
+}
+
+.card-detail-modal__lyrics.is-large {
+  font-size: 1.02rem;
+  line-height: 1.88;
+}
+
+.card-detail-modal__lyrics.is-medium {
+  font-size: 0.94rem;
+  line-height: 1.8;
+}
+
+.card-detail-modal__lyrics.is-compact {
+  font-size: 0.9rem;
+  line-height: 1.72;
+}
+
+.card-detail-modal__lyrics.is-staggered .card-detail-modal__lyrics-lines p:first-child {
+  transform: translateX(-0.9em);
+}
+
+.card-detail-modal__lyrics.is-staggered .card-detail-modal__lyrics-lines p:last-child {
+  transform: translateX(0.9em);
 }
 
 .card-detail-modal__meta {
   display: grid;
   justify-items: end;
-  gap: 4px;
+  gap: 3px;
+  padding-right: 2px;
 }
 
 .card-detail-modal__song-line {
   margin: 0;
   color: rgba(232, 225, 242, 0.88);
   font-family: 'Allura', 'KaiTi', 'STKaiti', 'Kaiti SC', serif;
-  font-size: clamp(0.92rem, 3.9vw, 1.08rem);
+  font-size: clamp(0.8rem, 3vw, 0.9rem);
   font-weight: 400;
   line-height: 1.3;
   text-align: right;
@@ -2033,17 +2108,31 @@ img {
   }
 
   .card-detail-modal__body {
-    gap: 16px;
+    gap: 8px;
     padding: 18px;
   }
 
   .card-detail-modal__lyrics {
-    min-height: 82px;
-    padding: 12px 14px;
+    min-height: 76px;
+    padding: 6px 2px 0;
+    font-size: 0.9rem;
+    line-height: 1.76;
+  }
+
+  .card-detail-modal__lyrics.is-large {
+    font-size: 0.98rem;
+  }
+
+  .card-detail-modal__lyrics.is-medium {
+    font-size: 0.9rem;
+  }
+
+  .card-detail-modal__lyrics.is-compact {
+    font-size: 0.86rem;
   }
 
   .card-detail-modal__song-line {
-    font-size: 0.96rem;
+    font-size: 0.82rem;
   }
 }
 

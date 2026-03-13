@@ -44,9 +44,7 @@ export function AlbumCard({
 
   const scaleByDepth =
     card.depthGroup === 'foreground' ? 1.03 : card.depthGroup === 'midground' ? 0.98 : 0.93;
-  const showDust =
-    profile === 'desktop' ||
-    (profile === 'mobile-high' && card.depthGroup !== 'background');
+  const showDust = profile === 'desktop' && card.depthGroup !== 'background';
 
   return (
     <button
@@ -87,6 +85,8 @@ export function AlbumCard({
               alt={card.songTitle ?? card.title ?? 'Album memory'}
               loading="lazy"
               decoding="async"
+              fetchPriority="low"
+              sizes="40px"
             />
             <span className="album-card__shine" />
           </span>
