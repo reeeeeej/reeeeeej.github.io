@@ -89,7 +89,7 @@ export function AppStateProvider({ children }: PropsWithChildren) {
     }
 
     const timer = window.setTimeout(() => {
-      dispatch({ type: 'set_stage', sceneStage: 'cake' });
+      dispatch({ type: 'set_stage', sceneStage: 'intro' });
     }, 900);
 
     return () => {

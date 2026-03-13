@@ -1,11 +1,24 @@
 import { useAppStateContext } from '../app/providers/AppStateProvider';
 import {
+  INTRO_TO_CAKE_TRANSITION_MS,
   ALBUM_TO_CAKE_TRANSITION_MS,
   CAKE_TO_ALBUM_TRANSITION_MS,
 } from '../utils/animation';
 
 export function useSceneStage() {
   const { state, dispatch } = useAppStateContext();
+
+  const beginCakeScene = () => {
+    if (state.isTransitioning || state.sceneStage !== 'intro') {
+      return;
+    }
+
+    dispatch({ type: 'start_intro_transition' });
+
+    window.setTimeout(() => {
+      dispatch({ type: 'complete_intro_transition' });
+    }, state.reducedMotionPreferred ? 180 : INTRO_TO_CAKE_TRANSITION_MS);
+  };
 
   const beginAlbumTransition = () => {
     if (state.isTransitioning || state.sceneStage !== 'cake') {
@@ -35,6 +48,7 @@ export function useSceneStage() {
     sceneStage: state.sceneStage,
     reducedMotionPreferred: state.reducedMotionPreferred,
     isTransitioning: state.isTransitioning,
+    beginCakeScene,
     beginAlbumTransition,
     beginCakeReturn,
   };

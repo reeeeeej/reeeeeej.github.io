@@ -6,10 +6,11 @@ import { CakeGlow } from './CakeGlow';
 interface CakeSceneProps {
   sceneConfig: SceneConfig;
   profile: DeviceProfile;
-  stage: 'cake' | 'transition-to-album' | 'transition-to-cake';
+  stage: 'cake' | 'intro-reveal' | 'transition-to-album' | 'transition-to-cake';
   onActivate: () => void;
   settling?: boolean;
   interactionLocked?: boolean;
+  revealing?: boolean;
 }
 
 export function CakeScene({
@@ -19,10 +20,12 @@ export function CakeScene({
   onActivate,
   settling = false,
   interactionLocked = false,
+  revealing = false,
 }: CakeSceneProps) {
   const isTransitioning = stage !== 'cake';
   const isTransitioningOut = stage === 'transition-to-album';
   const isReturning = stage === 'transition-to-cake';
+  const isIntroReveal = stage === 'intro-reveal';
 
   return (
     <section
@@ -31,6 +34,7 @@ export function CakeScene({
         isTransitioningOut ? 'is-transitioning-out' : '',
         isReturning ? 'is-returning' : '',
         settling ? 'is-settling-in' : '',
+        revealing ? 'is-intro-revealing' : '',
       ]
         .filter(Boolean)
         .join(' ')}
@@ -59,7 +63,7 @@ export function CakeScene({
           transitionState={
             isTransitioningOut
               ? 'explode'
-              : isReturning
+              : isReturning || isIntroReveal
                 ? 'reform'
                 : 'idle'
           }
@@ -78,6 +82,8 @@ export function CakeScene({
       <HintText>
         {isTransitioningOut
           ? 'The album is unfolding...'
+          : isIntroReveal
+            ? 'The cake is gathering from the light...'
           : isReturning
             ? 'Gathering the keepsakes back into the cake...'
             : sceneConfig.hintText}

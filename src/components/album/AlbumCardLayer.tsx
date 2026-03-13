@@ -30,7 +30,15 @@ export function AlbumCardLayer({
   canOpenCard,
   onCardSelect,
 }: AlbumCardLayerProps) {
-  const driftFactor = driftFactorByDepth[depthGroup];
+  const profileMultiplier =
+    profile === 'mobile-low'
+      ? 0.46
+      : profile === 'mobile-mid'
+        ? 0.58
+        : profile === 'mobile-high'
+          ? 0.72
+          : 1;
+  const driftFactor = driftFactorByDepth[depthGroup] * profileMultiplier;
 
   return (
     <div

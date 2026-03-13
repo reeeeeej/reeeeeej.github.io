@@ -11,6 +11,8 @@ export interface AppState {
 
 export type AppStateAction =
   | { type: 'set_stage'; sceneStage: SceneStage }
+  | { type: 'start_intro_transition' }
+  | { type: 'complete_intro_transition' }
   | { type: 'start_transition_to_album' }
   | { type: 'complete_transition_to_album' }
   | { type: 'start_transition_to_cake' }
@@ -44,6 +46,18 @@ export function appStateReducer(
       return {
         ...state,
         sceneStage: action.sceneStage,
+      };
+    case 'start_intro_transition':
+      return {
+        ...state,
+        sceneStage: 'intro-transition',
+        isTransitioning: true,
+      };
+    case 'complete_intro_transition':
+      return {
+        ...state,
+        sceneStage: 'cake',
+        isTransitioning: false,
       };
     case 'start_transition_to_album':
       return {

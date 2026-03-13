@@ -1,6 +1,7 @@
 export type SceneStage =
   | 'loading'
   | 'intro'
+  | 'intro-transition'
   | 'cake'
   | 'transition-to-album'
   | 'transition-to-cake'

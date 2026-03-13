@@ -4,6 +4,7 @@ import { ParticlesLayer } from '../components/background/ParticlesLayer';
 import { Starfield } from '../components/background/Starfield';
 import { CakeScene } from '../components/cake/CakeScene';
 import { GestureEntry } from '../components/gesture/GestureEntry';
+import { OpeningScene } from '../components/intro/OpeningScene';
 import { CardDetailModal } from '../components/modal/CardDetailModal';
 import { SceneTransitionLayer } from '../components/transition/SceneTransitionLayer';
 import { LoadingScreen } from '../components/ui/LoadingScreen';
@@ -15,7 +16,12 @@ import { useDeviceProfile } from '../hooks/useDeviceProfile';
 import { useSceneStage } from '../hooks/useSceneStage';
 import type { SceneStage } from '../types/scene';
 
-type CakeVisualStage = 'cake' | 'transition-to-album' | 'transition-to-cake' | null;
+type CakeVisualStage =
+  | 'cake'
+  | 'intro-reveal'
+  | 'transition-to-album'
+  | 'transition-to-cake'
+  | null;
 type AlbumVisualState = 'hidden' | 'entering' | 'active' | 'exiting';
 type SettleState = 'none' | 'to-album' | 'to-cake';
 
@@ -25,6 +31,7 @@ export function App() {
   const {
     sceneStage,
     reducedMotionPreferred,
+    beginCakeScene,
     beginAlbumTransition,
     beginCakeReturn,
   } =
@@ -53,6 +60,7 @@ export function App() {
   } as CSSProperties;
 
   const showLoading = sceneStage === 'loading';
+  const showIntro = sceneStage === 'intro' || sceneStage === 'intro-transition';
   const settleDuration = reducedMotionPreferred ? 40 : VISUAL_SETTLE_MS;
 
   useEffect(() => {
@@ -79,6 +87,11 @@ export function App() {
 
     if (sceneStage === 'loading' || sceneStage === 'intro') {
       setCakeVisualStage(null);
+      setAlbumVisualState('hidden');
+      setSettleState('none');
+      setTransitionDirection(null);
+    } else if (sceneStage === 'intro-transition') {
+      setCakeVisualStage('intro-reveal');
       setAlbumVisualState('hidden');
       setSettleState('none');
       setTransitionDirection(null);
@@ -150,8 +163,16 @@ export function App() {
             profile={deviceProfile}
             stage={cakeVisualStage ?? 'cake'}
             settling={settleState === 'to-cake'}
-            interactionLocked={transitionDirection !== null}
+            interactionLocked={transitionDirection !== null || sceneStage === 'intro-transition'}
+            revealing={sceneStage === 'intro-transition'}
             onActivate={beginAlbumTransition}
+          />
+        ) : null}
+
+        {showIntro ? (
+          <OpeningScene
+            onOpen={beginCakeScene}
+            exiting={sceneStage === 'intro-transition'}
           />
         ) : null}
 

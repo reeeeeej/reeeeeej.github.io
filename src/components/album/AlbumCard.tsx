@@ -23,6 +23,7 @@ export function AlbumCard({
   canOpenCard,
   onSelect,
 }: AlbumCardProps) {
+  const isMobileProfile = profile !== 'desktop';
   const classes = [
     'album-card',
     `album-card--${card.sizeType}`,
@@ -45,6 +46,11 @@ export function AlbumCard({
   const scaleByDepth =
     card.depthGroup === 'foreground' ? 1.03 : card.depthGroup === 'midground' ? 0.98 : 0.93;
   const showDust = profile === 'desktop' && card.depthGroup !== 'background';
+  const mobileTiltX = isMobileProfile ? 0.4 : 1.1;
+  const mobileYaw = isMobileProfile ? card.yawAngle * 0.32 : card.yawAngle ?? 0;
+  const mobilePitch = isMobileProfile ? card.pitchAngle * 0.25 : card.pitchAngle ?? 0;
+  const mobileTwist = isMobileProfile ? card.twistFactor * 0.38 : card.twistFactor;
+  const mobileZ = isMobileProfile ? Math.round((card.z ?? 0) * 0.45) : card.z ?? 0;
 
   return (
     <button
@@ -54,8 +60,8 @@ export function AlbumCard({
       style={{
         left: `${card.x ?? 50}%`,
         top: `${card.y ?? 50}%`,
-        transform: `translate3d(-50%, -50%, ${card.z ?? 0}px) rotate(${card.rotation ?? 0}deg) rotateY(${card.yawAngle ?? 0}deg) rotateX(${card.pitchAngle ?? 0}deg) rotateY(calc(var(--album-nx, 0) * ${card.twistFactor} * 1deg)) rotateX(calc(var(--album-ny, 0) * -1.1deg)) scale(${scaleByDepth})`,
-        zIndex: Math.round((card.z ?? 0) + (card.y ?? 0)),
+        transform: `translate3d(-50%, -50%, ${mobileZ}px) rotate(${card.rotation ?? 0}deg) rotateY(${mobileYaw}deg) rotateX(${mobilePitch}deg) rotateY(calc(var(--album-nx, 0) * ${mobileTwist} * 1deg)) rotateX(calc(var(--album-ny, 0) * -${mobileTiltX}deg)) scale(${scaleByDepth})`,
+        zIndex: Math.round(mobileZ + (card.y ?? 0)),
         ['--card-delay' as string]: `${entryIndex * 28}ms`,
         ['--card-shift-x' as string]: `${((card.x ?? 50) - 50) * 0.34}%`,
         ['--card-shift-y' as string]: `${22 - (card.y ?? 50) * 0.12}%`,

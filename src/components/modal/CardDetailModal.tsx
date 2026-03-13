@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 import type { AlbumCardItem } from '../../types/card';
 import { IconButton } from '../ui/IconButton';
 import { ModalBackdrop } from './ModalBackdrop';
@@ -15,7 +15,7 @@ function visibleLength(value: string) {
     }
 
     if (/\s/.test(char)) {
-      return total + 0.4;
+      return total + 0.35;
     }
 
     return total + 1;
@@ -43,8 +43,8 @@ function normalizeLyricLines(lyrics: string) {
   return lines;
 }
 
-function isLatinLine(value: string) {
-  return /[A-Za-z]/.test(value) && !/[\u4e00-\u9fff]/.test(value);
+function splitMixedLine(line: string) {
+  return line.split(/([A-Za-z][A-Za-z0-9 '&.,!?-]*)/g).filter(Boolean);
 }
 
 export function CardDetailModal({ card, onClose }: CardDetailModalProps) {
@@ -114,11 +114,27 @@ export function CardDetailModal({ card, onClose }: CardDetailModalProps) {
             {lyricLines.length > 0 ? (
               <div className="card-detail-modal__lyrics-lines">
                 {lyricLines.map((line, index) => (
-                  <p
-                    key={`${card.id}-line-${index}`}
-                    className={isLatinLine(line) ? 'is-latin' : ''}
-                  >
-                    {line}
+                  <p key={`${card.id}-line-${index}`}>
+                    {splitMixedLine(line).map((segment, segmentIndex) => {
+                      const isLatinSegment = /[A-Za-z]/.test(segment);
+
+                      if (!isLatinSegment) {
+                        return (
+                          <Fragment key={`${card.id}-${index}-${segmentIndex}`}>
+                            {segment}
+                          </Fragment>
+                        );
+                      }
+
+                      return (
+                        <span
+                          key={`${card.id}-${index}-${segmentIndex}`}
+                          className="is-latin"
+                        >
+                          {segment}
+                        </span>
+                      );
+                    })}
                   </p>
                 ))}
               </div>
