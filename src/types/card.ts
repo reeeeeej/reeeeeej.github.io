@@ -6,7 +6,10 @@ export interface AlbumCardItem {
   id: string;
   title?: string;
   image: string;
-  lyrics: string[];
+  coverImage: string;
+  songTitle: string;
+  artistName: string;
+  lyrics: string;
   note?: string;
   sizeType: CardSizeType;
   interactive: boolean;

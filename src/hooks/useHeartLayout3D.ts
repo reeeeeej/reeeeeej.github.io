@@ -138,19 +138,43 @@ function generateOutlineBand(config: OutlineBandConfig) {
 }
 
 function computeBandCounts(totalCards: number) {
-  const front = Math.max(24, Math.round(totalCards * 0.5));
-  const mid = Math.max(16, Math.round(totalCards * 0.29));
-  const back = Math.max(10, totalCards - front - mid);
-  const overflow = front + mid + back - totalCards;
+  const front = Math.max(16, Math.round(totalCards * 0.48));
+  const mid = Math.max(8, Math.round(totalCards * 0.3));
+  const back = Math.max(4, totalCards - front - mid);
 
-  if (overflow <= 0) {
+  if (front + mid + back <= totalCards) {
     return [front, mid, back] as const;
   }
 
-  return [front - overflow, mid, back] as const;
+  let remaining = totalCards;
+  const safeFront = Math.min(front, Math.max(remaining - 12, 0));
+  remaining -= safeFront;
+  const safeMid = Math.min(mid, Math.max(remaining - 4, 0));
+  remaining -= safeMid;
+  const safeBack = Math.max(remaining, 0);
+
+  return [safeFront, safeMid, safeBack] as const;
 }
 
 function generateOutlineSlots(totalCards: number) {
+  if (totalCards <= 30) {
+    return generateOutlineBand({
+      depthGroup: 'foreground',
+      count: totalCards,
+      scale: 1.08,
+      baseZ: 8,
+      zShift: 1,
+      sizeMode: 'medium',
+      rotationScale: 3.8,
+      phase: 0.02,
+    }).map((slot, index) => ({
+      ...slot,
+      z: slot.z + Math.sin(index * 0.85) * 1.1,
+      depthGroup: 'foreground' as const,
+      sizeType: 'medium' as const,
+    }));
+  }
+
   const [frontCount, midCount, backCount] = computeBandCounts(totalCards);
   const configs: OutlineBandConfig[] = [
     {

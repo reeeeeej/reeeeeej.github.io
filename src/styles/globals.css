@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Italianno&family=Pinyon+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Allura&family=Italianno&family=Pinyon+Script&display=swap');
 
 * {
   box-sizing: border-box;
@@ -1176,6 +1176,7 @@ img {
 .album-viewport__outline-particles,
 .album-viewport__ambient,
 .album-viewport__monogram,
+.album-viewport__infinity,
 .album-viewport__dust {
   position: absolute;
   pointer-events: none;
@@ -1232,9 +1233,9 @@ img {
 
 .album-viewport__monogram {
   left: 50%;
-  top: 45%;
+  top: 41.5%;
   z-index: 6;
-  width: 150px;
+  width: 196px;
   height: 120px;
   transform: translate3d(-50%, -50%, 12px);
   opacity: 0.94;
@@ -1368,6 +1369,57 @@ img {
   display: grid;
   place-items: center;
   transform: translateZ(-30px);
+}
+
+.album-viewport__infinity {
+  left: 50%;
+  bottom: 7.4%;
+  z-index: 5;
+  width: min(56vw, 220px);
+  aspect-ratio: 2.34 / 1;
+  transform: translate3d(-50%, 0, 6px);
+}
+
+.album-viewport__infinity::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 60%;
+  width: 92%;
+  height: 30%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(20, 12, 48, 0.22), transparent 72%);
+  filter: blur(8px);
+  z-index: -1;
+}
+
+.album-viewport__infinity-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.album-viewport__infinity-shadow {
+  fill: none;
+  stroke: rgba(19, 11, 44, 0.14);
+  stroke-width: 1.2;
+  filter: blur(1.4px);
+  transform: translateY(1px);
+  transform-origin: center;
+}
+
+.album-viewport__infinity-stroke {
+  fill: none;
+  stroke: rgba(238, 228, 248, 0.08);
+  stroke-width: 0.64;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: blur(0.35px);
+}
+
+.album-viewport__infinity-orb {
+  fill: rgba(255, 247, 255, 0.98);
 }
 
 .album-viewport__core-ring {
@@ -1567,13 +1619,18 @@ img {
 }
 
 [data-profile='mobile-low'] .album-viewport__monogram {
-  width: 132px;
+  width: 172px;
   height: 112px;
-  top: 46%;
+  top: 42.5%;
 }
 
 [data-profile='mobile-low'] .album-viewport__monogram-word {
-  font-size: 4rem;
+  font-size: 4.2rem;
+}
+
+[data-profile='mobile-low'] .album-viewport__infinity {
+  bottom: 8.4%;
+  width: min(50vw, 188px);
 }
 
 [data-profile='mobile-low'] .album-viewport__ambient-mote,
@@ -1769,250 +1826,118 @@ img {
   z-index: 5;
   display: grid;
   place-items: center;
-  padding: 18px;
+  padding: 20px;
 }
 
 .modal-backdrop {
   position: absolute;
   inset: 0;
   border: 0;
-  background: rgba(7, 7, 17, 0.48);
-  backdrop-filter: blur(10px);
+  background: rgba(8, 8, 18, 0.62);
 }
 
 .card-detail-modal__panel {
   position: relative;
   z-index: 1;
-  width: min(100%, 430px);
-  padding: 18px;
-  border-radius: 30px;
-  background:
-    linear-gradient(180deg, rgba(20, 14, 39, 0.94), rgba(10, 8, 24, 0.98)),
-    radial-gradient(circle at top, rgba(255, 199, 230, 0.1), transparent 34%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 26px 60px rgba(4, 4, 15, 0.46);
+  width: min(100%, 352px);
   overflow: hidden;
-}
-
-.card-detail-modal__panel::before,
-.card-detail-modal__panel::after {
-  content: '';
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-.card-detail-modal__panel::before {
-  top: -16%;
-  right: -10%;
-  width: 48%;
-  height: 28%;
-  background: radial-gradient(circle, rgba(255, 218, 239, 0.18), transparent 68%);
-  filter: blur(14px);
-}
-
-.card-detail-modal__panel::after {
-  left: -8%;
-  bottom: 4%;
-  width: 42%;
-  height: 22%;
-  background: radial-gradient(circle, rgba(198, 232, 255, 0.12), transparent 70%);
-  filter: blur(18px);
-}
-
-.card-detail-modal__art {
-  position: relative;
-  min-height: 70vh;
-}
-
-.card-detail-modal__seal {
-  position: absolute;
-  left: 18px;
-  top: 16px;
-  z-index: 2;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.07);
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(20, 15, 35, 0.98), rgba(12, 10, 22, 0.98));
   border: 1px solid rgba(255, 255, 255, 0.08);
-  color: rgba(244, 241, 255, 0.74);
-  font-size: 0.58rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  backdrop-filter: blur(8px);
+  box-shadow: 0 20px 44px rgba(4, 4, 15, 0.42);
+  overflow: hidden;
 }
 
 .card-detail-modal__cover {
   position: relative;
   overflow: hidden;
-  border-radius: 24px;
-  width: 72%;
-  box-shadow: 0 20px 40px rgba(4, 4, 15, 0.3);
+  width: 100%;
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .card-detail-modal__cover::after {
   content: '';
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.18), transparent 24%),
-    radial-gradient(circle at 75% 18%, rgba(255, 255, 255, 0.14), transparent 24%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
   pointer-events: none;
 }
 
 .card-detail-modal__cover img {
   width: 100%;
-  aspect-ratio: 0.88;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
 }
 
-.card-detail-modal__paper {
-  position: absolute;
-  border-radius: 24px;
-  padding: 18px 18px 20px;
-  background:
-    linear-gradient(180deg, rgba(255, 251, 254, 0.92), rgba(252, 245, 250, 0.78)),
-    radial-gradient(circle at top, rgba(255, 214, 241, 0.18), transparent 44%);
-  color: #3a2847;
-  box-shadow:
-    0 18px 38px rgba(7, 7, 18, 0.18),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.26);
-  backdrop-filter: blur(8px);
-}
-
-.card-detail-modal__paper--main {
-  width: 58%;
-}
-
-.card-detail-modal__paper--accent {
-  width: 46%;
-}
-
-.card-detail-modal__lead {
-  margin: 0 0 12px;
-  color: rgba(78, 55, 94, 0.58);
-  font-size: 0.78rem;
-  line-height: 1.5;
-}
-
-.card-detail-modal__panel--letter .card-detail-modal__cover {
-  margin-top: 26px;
-  margin-left: 4%;
-}
-
-.card-detail-modal__panel--letter .card-detail-modal__paper--main {
-  top: 42%;
-  right: 2%;
-  transform: rotate(-4deg);
-}
-
-.card-detail-modal__panel--letter .card-detail-modal__paper--accent {
-  bottom: 4%;
-  left: 8%;
-  transform: rotate(3deg);
-}
-
-.card-detail-modal__panel--split .card-detail-modal__cover {
-  width: 54%;
-  margin-top: 30px;
-}
-
-.card-detail-modal__panel--split .card-detail-modal__paper--main {
-  top: 7%;
-  right: 0;
-  width: 42%;
-  min-height: 56%;
-}
-
-.card-detail-modal__panel--split .card-detail-modal__paper--accent {
-  bottom: 6%;
-  right: 5%;
-  width: 40%;
-}
-
-.card-detail-modal__panel--collage .card-detail-modal__cover {
-  width: 64%;
-  margin-top: 24px;
-  margin-left: auto;
-}
-
-.card-detail-modal__panel--collage .card-detail-modal__paper--main {
-  top: 8%;
-  left: 0;
-  width: 48%;
-  transform: rotate(-3deg);
-}
-
-.card-detail-modal__panel--collage .card-detail-modal__paper--accent {
-  bottom: 8%;
-  left: 10%;
-  width: 38%;
-}
-
-.card-detail-modal__panel--note .card-detail-modal__cover {
-  width: 78%;
-  margin: 22px auto 0;
-}
-
-.card-detail-modal__panel--note .card-detail-modal__paper--main {
-  left: 50%;
-  bottom: 14%;
-  width: 68%;
-  transform: translateX(-50%);
-}
-
-.card-detail-modal__panel--note .card-detail-modal__paper--accent {
-  top: 9%;
-  right: 2%;
-  width: 34%;
-  transform: rotate(5deg);
-}
-
-.card-detail-modal__content h3,
-.card-detail-modal__paper h3 {
-  margin: 10px 0 12px;
-  font-size: 1.4rem;
-  line-height: 1.05;
+.card-detail-modal__body {
+  display: grid;
+  gap: 18px;
+  padding: 20px 20px 22px;
+  background: linear-gradient(180deg, rgba(14, 12, 25, 0.98), rgba(10, 8, 18, 1));
 }
 
 .card-detail-modal__lyrics {
-  display: grid;
-  gap: 10px;
-  line-height: 1.65;
-  color: rgba(61, 43, 75, 0.82);
-  font-size: 0.9rem;
+  min-height: 92px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 14px 16px;
+  color: rgba(244, 240, 249, 0.84);
+  font-family: 'KaiTi', 'STKaiti', 'Kaiti SC', serif;
+  font-size: 0.94rem;
+  line-height: 1.75;
 }
 
-.card-detail-modal__note-label {
-  margin: 0 0 10px;
-  font-size: 0.68rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(78, 55, 94, 0.48);
+.card-detail-modal__lyrics:empty::before {
+  content: '';
+  display: block;
+  min-height: 64px;
 }
 
-.card-detail-modal__note {
+.card-detail-modal__lyrics p {
   margin: 0;
-  color: rgba(61, 43, 75, 0.82);
-  font-size: 0.86rem;
-  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.card-detail-modal__meta {
+  display: grid;
+  justify-items: end;
+  gap: 4px;
+}
+
+.card-detail-modal__song-line {
+  margin: 0;
+  color: rgba(232, 225, 242, 0.88);
+  font-family: 'Allura', 'KaiTi', 'STKaiti', 'Kaiti SC', serif;
+  font-size: clamp(0.92rem, 3.9vw, 1.08rem);
+  font-weight: 400;
+  line-height: 1.3;
+  text-align: right;
+}
+
+.card-detail-modal__artist {
+  margin: 0;
+  color: rgba(194, 186, 209, 0.7);
+  font-family: 'Allura', 'KaiTi', 'STKaiti', 'Kaiti SC', serif;
+  font-size: 0.82rem;
+  line-height: 1.1;
+  text-align: right;
 }
 
 .icon-button {
   position: absolute;
-  right: 14px;
-  top: 14px;
+  right: 10px;
+  top: 10px;
   z-index: 3;
-  width: 40px;
-  height: 40px;
+  width: 34px;
+  height: 34px;
   border: 0;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--text-primary);
-  font-size: 1rem;
+  background: rgba(7, 7, 16, 0.56);
+  color: rgba(248, 245, 255, 0.88);
+  font-size: 1.1rem;
   line-height: 1;
-  text-transform: uppercase;
   cursor: pointer;
-  backdrop-filter: blur(8px);
   transition: transform 160ms ease, background-color 160ms ease;
 }
 
@@ -2103,16 +2028,22 @@ img {
   }
 
   .card-detail-modal__panel {
-    padding: 16px;
-    border-radius: 26px;
+    width: min(100%, 332px);
+    border-radius: 22px;
   }
 
-  .card-detail-modal__art {
-    min-height: 66vh;
+  .card-detail-modal__body {
+    gap: 16px;
+    padding: 18px;
   }
 
-  .card-detail-modal__paper {
-    padding: 16px 16px 18px;
+  .card-detail-modal__lyrics {
+    min-height: 82px;
+    padding: 12px 14px;
+  }
+
+  .card-detail-modal__song-line {
+    font-size: 0.96rem;
   }
 }
 

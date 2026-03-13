@@ -76,6 +76,19 @@
   }
 }
 
+@keyframes infinityGlow {
+  0%,
+  100% {
+    opacity: 0.38;
+    filter: brightness(0.92);
+  }
+
+  50% {
+    opacity: 0.92;
+    filter: brightness(1.12);
+  }
+}
+
 @keyframes candleGlow {
   0%,
   100% {
@@ -647,14 +660,9 @@
   animation: detailPhotoIn 0.5s cubic-bezier(0.18, 0.78, 0.22, 1) both;
 }
 
-.card-detail-modal__paper--main {
+.card-detail-modal__body {
   animation: detailPaperIn 0.46s cubic-bezier(0.18, 0.78, 0.22, 1) both;
   animation-delay: 0.04s;
-}
-
-.card-detail-modal__paper--accent {
-  animation: detailPaperIn 0.5s cubic-bezier(0.18, 0.78, 0.22, 1) both;
-  animation-delay: 0.1s;
 }
 
 .cake-scene.is-returning {
@@ -784,12 +792,13 @@
 .is-reduced-motion .scene-transition-layer__stream,
 .is-reduced-motion .album-viewport__core-ring,
 .is-reduced-motion .album-viewport__glow,
+.is-reduced-motion .album-viewport__infinity,
 .is-reduced-motion .album-card-layer__inner,
 .is-reduced-motion .album-card__entry,
 .is-reduced-motion .card-detail-modal .modal-backdrop,
 .is-reduced-motion .card-detail-modal__panel,
 .is-reduced-motion .card-detail-modal__cover,
-.is-reduced-motion .card-detail-modal__paper,
+.is-reduced-motion .card-detail-modal__body,
 .is-reduced-motion .loading-screen__core {
   animation: none;
 }

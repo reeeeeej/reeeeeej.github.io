@@ -64,7 +64,7 @@ export function AlbumCard({
         ['--card-drift' as string]: `${((card.x ?? 50) - 50) * 0.16}px`,
         ['--card-twist-factor' as string]: `${card.twistFactor}`,
       }}
-      aria-label={`Open ${card.title}`}
+      aria-label={`Open ${card.songTitle ?? card.title ?? 'album memory'}`}
     >
       <span
         className={`album-card__entry ${entering ? 'is-entering' : ''} ${exiting ? 'is-exiting' : ''}`}
@@ -83,8 +83,8 @@ export function AlbumCard({
           <span className="album-card__photo-shell">
             <img
               className="album-card__image"
-              src={card.image}
-              alt={card.title ?? 'Album memory'}
+              src={card.coverImage || card.image}
+              alt={card.songTitle ?? card.title ?? 'Album memory'}
               loading="lazy"
               decoding="async"
             />

@@ -53,6 +53,19 @@ const profileConfig: Record<
   },
 };
 
+const infinityStream = Array.from({ length: 18 }, (_, index) => {
+  const alpha = index === 0 ? 0.96 : Math.max(0.2, 0.9 - index * 0.045);
+  const glow = index < 3 ? 4 : index < 8 ? 3 : 2;
+  const tint = index % 3 === 0 ? '255,236,244' : index % 3 === 1 ? '214,233,255' : '246,239,255';
+
+  return {
+    r: 1.12,
+    begin: `${(index * 0.62).toFixed(2)}s`,
+    fill: `rgba(248,242,251,${alpha})`,
+    shadow: `0 0 ${glow}px rgba(${tint},${Math.max(0.06, alpha * 0.28).toFixed(2)})`,
+  };
+});
+
 const ambientMotes = [
   { left: '11%', top: '18%', size: 7, delay: '0.2s', duration: '5.2s' },
   { left: '18%', top: '31%', size: 5, delay: '1.1s', duration: '4.8s' },
@@ -176,6 +189,18 @@ function createMonogramDust(count: number) {
   });
 }
 
+function createInfinityPath() {
+  const steps = 72;
+
+  return Array.from({ length: steps + 1 }, (_, index) => {
+    const t = (Math.PI * 2 * index) / steps;
+    const x = 50 + Math.sin(t) * 36.5;
+    const y = 22 + Math.sin(t) * Math.cos(t) * 7.3;
+
+    return `${index === 0 ? 'M' : 'L'} ${x.toFixed(2)} ${y.toFixed(2)}`;
+  }).join(' ');
+}
+
 interface AlbumViewportRenderProps {
   canOpenCard: () => boolean;
 }
@@ -205,6 +230,7 @@ export function AlbumViewport({
     () => createMonogramDust(config.monogramParticleCount),
     [config.monogramParticleCount],
   );
+  const infinityPath = useMemo(() => createInfinityPath(), []);
 
   return (
     <div
@@ -250,7 +276,7 @@ export function AlbumViewport({
             ))}
           </div>
           <div className="album-viewport__monogram" aria-hidden="true">
-            <span className="album-viewport__monogram-word">mo</span>
+            <span className="album-viewport__monogram-word">momo</span>
             {monogramDust.map((particle, index) => (
               <span
                 key={`mo-dust-${index}`}
@@ -303,6 +329,35 @@ export function AlbumViewport({
           <div className="album-viewport__core" aria-hidden="true">
             <span className="album-viewport__core-ring" />
             <span className="album-viewport__core-ring album-viewport__core-ring--inner" />
+          </div>
+          <div className="album-viewport__infinity" aria-hidden="true">
+            <svg
+              className="album-viewport__infinity-svg"
+              viewBox="0 0 100 44"
+              preserveAspectRatio="xMidYMid meet"
+            >
+              <path className="album-viewport__infinity-shadow" d={infinityPath} />
+              <path className="album-viewport__infinity-stroke" d={infinityPath} />
+              {infinityStream.map((particle, index) => (
+                <circle
+                  key={`infinity-stream-${index}`}
+                  className="album-viewport__infinity-orb"
+                  r={particle.r}
+                  style={{
+                    fill: particle.fill,
+                    filter: `drop-shadow(${particle.shadow})`,
+                  }}
+                >
+                  <animateMotion
+                    dur="11s"
+                    begin={particle.begin}
+                    repeatCount="indefinite"
+                    rotate="auto"
+                    path={infinityPath}
+                  />
+                </circle>
+              ))}
+            </svg>
           </div>
           {children({ canOpenCard })}
         </div>

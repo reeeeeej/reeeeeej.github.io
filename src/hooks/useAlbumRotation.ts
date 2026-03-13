@@ -122,7 +122,6 @@ export function useAlbumRotation(active: boolean): AlbumRotationControls {
         startPointRef.current = { x: event.clientX, y: event.clientY };
         startRotationRef.current = { ...targetRotationRef.current };
         hasDraggedRef.current = false;
-        event.currentTarget.setPointerCapture(event.pointerId);
       },
       onPointerMove: (event) => {
         if (!active || pointerIdRef.current !== event.pointerId) {
@@ -135,6 +134,9 @@ export function useAlbumRotation(active: boolean): AlbumRotationControls {
         if (!hasDraggedRef.current && Math.hypot(deltaX, deltaY) >= DRAG_THRESHOLD_PX) {
           hasDraggedRef.current = true;
           setIsDragging(true);
+          if (!event.currentTarget.hasPointerCapture(event.pointerId)) {
+            event.currentTarget.setPointerCapture(event.pointerId);
+          }
         }
 
         const nextRotateY = clamp(
@@ -157,7 +159,9 @@ export function useAlbumRotation(active: boolean): AlbumRotationControls {
         }
 
         const didDrag = hasDraggedRef.current;
-        event.currentTarget.releasePointerCapture(event.pointerId);
+        if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+          event.currentTarget.releasePointerCapture(event.pointerId);
+        }
         finishGesture(didDrag);
       },
       onPointerCancel: (event) => {
@@ -166,6 +170,9 @@ export function useAlbumRotation(active: boolean): AlbumRotationControls {
         }
 
         const didDrag = hasDraggedRef.current;
+        if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+          event.currentTarget.releasePointerCapture(event.pointerId);
+        }
         finishGesture(didDrag);
       },
       onPointerLeave: () => {
