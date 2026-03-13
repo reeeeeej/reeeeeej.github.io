@@ -552,7 +552,6 @@ img {
   inset: 0;
   display: grid;
   place-items: center;
-  transform: translateX(6px);
 }
 
 .cake-glow__halo {
@@ -616,7 +615,6 @@ img {
 
 .cake-core__sculpture {
   inset: 0 6% 12%;
-  transform: translateX(-8px);
 }
 
 .cake-core__tier-particles {
@@ -945,7 +943,6 @@ img {
 .cake-core__ring {
   inset: auto 14% 7% 14%;
   height: 16%;
-  transform: translateX(6px);
 }
 
 .cake-core__ring-line {
