@@ -63,7 +63,7 @@ export function CakeScene({
           transitionState={
             isTransitioningOut
               ? 'explode'
-              : isReturning || isIntroReveal
+              : isReturning
                 ? 'reform'
                 : 'idle'
           }
@@ -83,7 +83,7 @@ export function CakeScene({
         {isTransitioningOut
           ? 'The album is unfolding...'
           : isIntroReveal
-            ? 'The cake is gathering from the light...'
+            ? 'The cake is softly appearing...'
           : isReturning
             ? 'Gathering the keepsakes back into the cake...'
             : sceneConfig.hintText}

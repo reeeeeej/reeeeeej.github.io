@@ -40,6 +40,7 @@ export function App() {
   const { selectedCard, closeDetail, selectedCardId, openDetail } =
     useCardSelection();
   const previousStageRef = useRef<SceneStage | null>(null);
+  const hasStartedPreloadRef = useRef(false);
   const [cakeVisualStage, setCakeVisualStage] = useState<CakeVisualStage>(null);
   const [albumVisualState, setAlbumVisualState] =
     useState<AlbumVisualState>('hidden');
@@ -62,6 +63,41 @@ export function App() {
   const showLoading = sceneStage === 'loading';
   const showIntro = sceneStage === 'intro' || sceneStage === 'intro-transition';
   const settleDuration = reducedMotionPreferred ? 40 : VISUAL_SETTLE_MS;
+
+  useEffect(() => {
+    if (hasStartedPreloadRef.current || sceneStage === 'loading') {
+      return;
+    }
+
+    hasStartedPreloadRef.current = true;
+    const coverSources = Array.from(
+      new Set(cards.map((card) => card.coverImage || card.image).filter(Boolean)),
+    );
+    const timers: number[] = [];
+
+    const startPreload = () => {
+      coverSources.forEach((src, index) => {
+        const timer = window.setTimeout(() => {
+          const image = new Image();
+          image.decoding = 'async';
+          image.fetchPriority = index < 6 ? 'high' : 'low';
+          image.src = src;
+          if (typeof image.decode === 'function') {
+            void image.decode().catch(() => undefined);
+          }
+        }, index * 90);
+
+        timers.push(timer);
+      });
+    };
+
+    const kickoff = window.setTimeout(startPreload, 120);
+
+    return () => {
+      window.clearTimeout(kickoff);
+      timers.forEach((timer) => window.clearTimeout(timer));
+    };
+  }, [sceneStage]);
 
   useEffect(() => {
     const previousStage = previousStageRef.current;

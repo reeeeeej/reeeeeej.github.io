@@ -89,10 +89,10 @@ export function AlbumCard({
               className="album-card__image"
               src={card.coverImage || card.image}
               alt={card.songTitle ?? card.title ?? 'Album memory'}
-              loading="lazy"
+              loading={entryIndex < 8 ? 'eager' : 'lazy'}
               decoding="async"
-              fetchPriority="low"
-              sizes="40px"
+              fetchPriority={entryIndex < 8 ? 'high' : 'low'}
+              sizes="64px"
             />
             <span className="album-card__shine" />
           </span>
