@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Italianno&family=Pinyon+Script&display=swap');
+
 * {
   box-sizing: border-box;
 }
@@ -387,7 +389,7 @@ img {
 .album-scene__title {
   margin: 8px 0 0;
   font-size: clamp(1.28rem, 5.8vw, 2rem);
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1;
   letter-spacing: 0.02em;
   text-wrap: balance;
@@ -398,7 +400,13 @@ img {
 }
 
 .cake-scene__title {
+  font-family: 'Pinyon Script', Georgia, 'Times New Roman', serif;
+  font-size: clamp(2.4rem, 10vw, 4rem);
   white-space: nowrap;
+  letter-spacing: 0;
+  text-shadow:
+    0 0 10px rgba(255, 231, 244, 0.18),
+    0 0 22px rgba(191, 231, 255, 0.12);
 }
 
 .cake-scene__subtitle {
@@ -1240,11 +1248,11 @@ img {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  font-family: Georgia, 'Times New Roman', 'PingFang SC', 'Microsoft YaHei', serif;
-  font-size: 4rem;
-  font-weight: 700;
+  font-family: 'Italianno', 'Times New Roman', serif;
+  font-size: 4.8rem;
+  font-weight: 400;
   line-height: 1;
-  letter-spacing: 0.01em;
+  letter-spacing: 0;
   color: rgba(248, 245, 255, 0.9);
   text-shadow:
     0 0 10px rgba(191, 231, 255, 0.18),
@@ -1568,7 +1576,7 @@ img {
 }
 
 [data-profile='mobile-low'] .album-viewport__monogram-word {
-  font-size: 3.4rem;
+  font-size: 4rem;
 }
 
 [data-profile='mobile-low'] .album-viewport__ambient-mote,
