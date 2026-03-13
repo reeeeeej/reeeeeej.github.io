@@ -15,6 +15,7 @@ import { useCardSelection } from '../hooks/useCardSelection';
 import { useDeviceProfile } from '../hooks/useDeviceProfile';
 import { useSceneStage } from '../hooks/useSceneStage';
 import type { SceneStage } from '../types/scene';
+import { detectBrowserProfile, type BrowserProfile } from '../utils/browser';
 
 type CakeVisualStage =
   | 'cake'
@@ -48,6 +49,8 @@ export function App() {
   const [transitionDirection, setTransitionDirection] = useState<
     'to-album' | 'to-cake' | null
   >(null);
+  const [browserProfile, setBrowserProfile] =
+    useState<BrowserProfile>('default');
 
   const appTheme = {
     '--bg-base': themeConfig.background.base,
@@ -63,6 +66,10 @@ export function App() {
   const showLoading = sceneStage === 'loading';
   const showIntro = sceneStage === 'intro' || sceneStage === 'intro-transition';
   const settleDuration = reducedMotionPreferred ? 40 : VISUAL_SETTLE_MS;
+
+  useEffect(() => {
+    setBrowserProfile(detectBrowserProfile());
+  }, []);
 
   useEffect(() => {
     if (hasStartedPreloadRef.current || sceneStage === 'loading') {
@@ -187,6 +194,7 @@ export function App() {
       className={`app-shell ${reducedMotionPreferred ? 'is-reduced-motion' : ''}`}
       data-scene-stage={sceneStage}
       data-device-profile={deviceProfile}
+      data-browser-profile={browserProfile}
       style={appTheme}
     >
       <Starfield profile={deviceProfile} />
