@@ -250,44 +250,7 @@ export function AlbumViewport({
             ))}
           </div>
           <div className="album-viewport__monogram" aria-hidden="true">
-            <svg
-              className="album-viewport__monogram-svg"
-              viewBox="0 0 260 120"
-              role="presentation"
-            >
-              <path
-                className="album-viewport__monogram-stroke"
-                d="M18 92C18 61 26 35 42 35C57 35 66 48 66 67V92C66 96 68 98 71 98C75 98 78 95 78 90V63C78 46 88 35 102 35C116 35 125 45 125 61V92"
-              />
-              <path
-                className="album-viewport__monogram-stroke"
-                d="M124 68C126 47 141 34 161 34C185 34 202 50 202 70C202 88 189 102 171 102C155 102 143 92 137 77"
-              />
-              <path
-                className="album-viewport__monogram-flourish"
-                d="M201 69C220 65 233 53 238 34"
-              />
-              <path
-                className="album-viewport__monogram-flourish"
-                d="M12 92C24 106 44 108 58 95"
-              />
-              <path
-                className="album-viewport__monogram-accent"
-                d="M55 29C61 20 72 16 84 17"
-              />
-              <path
-                className="album-viewport__monogram-accent"
-                d="M152 28C167 17 185 18 198 29"
-              />
-              <path
-                className="album-viewport__monogram-trace"
-                d="M18 92C18 61 26 35 42 35C57 35 66 48 66 67V92C66 96 68 98 71 98C75 98 78 95 78 90V63C78 46 88 35 102 35C116 35 125 45 125 61V92"
-              />
-              <path
-                className="album-viewport__monogram-trace"
-                d="M124 68C126 47 141 34 161 34C185 34 202 50 202 70C202 88 189 102 171 102C155 102 143 92 137 77"
-              />
-            </svg>
+            <span className="album-viewport__monogram-word">mo</span>
             {monogramDust.map((particle, index) => (
               <span
                 key={`mo-dust-${index}`}
