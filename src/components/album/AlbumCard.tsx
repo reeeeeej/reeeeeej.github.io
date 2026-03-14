@@ -99,9 +99,9 @@ export function AlbumCard({
               className="album-card__image"
               src={card.coverImage || card.image}
               alt={card.songTitle ?? card.title ?? 'Album memory'}
-              loading={entryIndex < 12 ? 'eager' : 'lazy'}
+              loading={browserProfile === 'ios-safari' ? (entryIndex < 8 ? 'eager' : 'lazy') : entryIndex < 12 ? 'eager' : 'lazy'}
               decoding="async"
-              fetchPriority={entryIndex < 12 ? 'high' : 'low'}
+              fetchPriority={browserProfile === 'ios-safari' ? (entryIndex < 8 ? 'high' : 'low') : entryIndex < 12 ? 'high' : 'low'}
               sizes="64px"
             />
             <span className="album-card__shine" />

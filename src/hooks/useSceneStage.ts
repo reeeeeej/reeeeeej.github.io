@@ -31,7 +31,7 @@ export function useSceneStage() {
 
     window.setTimeout(() => {
       dispatch({ type: 'complete_transition_to_album' });
-    }, state.reducedMotionPreferred ? 250 : browserProfile === 'ios-safari' ? 720 : CAKE_TO_ALBUM_TRANSITION_MS);
+    }, state.reducedMotionPreferred ? 250 : browserProfile === 'ios-safari' ? 420 : CAKE_TO_ALBUM_TRANSITION_MS);
   };
 
   const beginCakeReturn = () => {

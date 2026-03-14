@@ -224,7 +224,19 @@ export function AlbumViewport({
   children,
 }: AlbumViewportProps) {
   const { viewportRef, handlers, canOpenCard, isDragging } =
-    useAlbumRotation(active && browserProfile !== 'ios-safari');
+    useAlbumRotation(active);
+  const interactionHandlers =
+    browserProfile === 'ios-safari'
+      ? {
+          onPointerDown: () => undefined,
+          onPointerMove: () => undefined,
+          onPointerUp: () => undefined,
+          onPointerCancel: () => undefined,
+          onPointerLeave: () => undefined,
+        }
+      : handlers;
+  const canOpen =
+    browserProfile === 'ios-safari' ? () => active : canOpenCard;
   const config = profileConfig[profile];
   const outlineParticles = useMemo(
     () => createOutlineParticles(config.outlineCount),
@@ -241,7 +253,7 @@ export function AlbumViewport({
       ref={viewportRef}
       className={`album-viewport ${entering ? 'is-entering' : ''} ${exiting ? 'is-exiting' : ''} ${active ? 'is-active' : ''} ${isDragging ? 'is-dragging' : ''}`}
       data-profile={profile}
-      {...handlers}
+      {...interactionHandlers}
     >
       <div className="album-viewport__stage">
         <div className="album-viewport__assembly">
@@ -363,7 +375,7 @@ export function AlbumViewport({
               ))}
             </svg>
           </div>
-          {children({ canOpenCard })}
+          {children({ canOpenCard: canOpen })}
         </div>
       </div>
     </div>

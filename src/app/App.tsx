@@ -50,7 +50,7 @@ export function App() {
     'to-album' | 'to-cake' | null
   >(null);
   const [browserProfile, setBrowserProfile] =
-    useState<BrowserProfile>('default');
+    useState<BrowserProfile>(() => detectBrowserProfile());
 
   const appTheme = {
     '--bg-base': themeConfig.background.base,
@@ -80,12 +80,14 @@ export function App() {
     const coverSources = Array.from(
       new Set(cards.map((card) => card.coverImage || card.image).filter(Boolean)),
     );
+    const preloadSources =
+      browserProfile === 'ios-safari' ? coverSources.slice(0, 10) : coverSources;
     const startPreload = () => {
-      coverSources.forEach((src, index) => {
+      preloadSources.forEach((src, index) => {
         const image = new Image();
         image.decoding = 'async';
-        image.fetchPriority = index < 8 ? 'high' : 'auto';
-        image.loading = 'eager';
+        image.fetchPriority = index < 6 ? 'high' : 'low';
+        image.loading = index < 6 ? 'eager' : 'lazy';
         image.src = src;
         if (typeof image.decode === 'function') {
           void image.decode().catch(() => undefined);
@@ -98,7 +100,7 @@ export function App() {
     return () => {
       window.clearTimeout(kickoff);
     };
-  }, [sceneStage]);
+  }, [browserProfile, sceneStage]);
 
   useEffect(() => {
     const previousStage = previousStageRef.current;
