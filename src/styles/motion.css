@@ -140,7 +140,7 @@
 @keyframes launchStream {
   0% {
     opacity: 0;
-    transform: translate3d(-50%, 18px, 0) scaleY(0.4);
+    transform: translate3d(-50%, 14px, 0) scaleY(0.52);
   }
 
   24% {
@@ -149,14 +149,14 @@
 
   100% {
     opacity: 0;
-    transform: translate3d(-50%, -92px, 0) scaleY(1.12);
+    transform: translate3d(-50%, -74px, 0) scaleY(1);
   }
 }
 
 @keyframes launchCard {
   0% {
     opacity: 0;
-    transform: translate3d(-50%, 26px, 0) scale(0.44) rotate(0deg);
+    transform: translate3d(-50%, 18px, 0) scale(0.58) rotate(0deg);
   }
 
   28% {
@@ -165,7 +165,7 @@
 
   100% {
     opacity: 0;
-    transform: translate3d(-50%, -136px, 0) scale(1) rotate(var(--launch-rotate, 0deg));
+    transform: translate3d(-50%, -102px, 0) scale(0.92) rotate(var(--launch-rotate, 0deg));
   }
 }
 
@@ -195,8 +195,7 @@
 @keyframes albumCardRise {
   0% {
     opacity: 0;
-    transform: translate3d(var(--card-shift-x, 0), var(--card-shift-y, 0), 0) scale(0.8);
-    filter: blur(6px);
+    transform: translate3d(var(--card-shift-x, 0), var(--card-shift-y, 0), 0) scale(0.88);
   }
 
   52% {
@@ -206,7 +205,6 @@
   100% {
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1);
-    filter: blur(0);
   }
 }
 
@@ -214,13 +212,11 @@
   0% {
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1);
-    filter: blur(0);
   }
 
   100% {
     opacity: 0;
-    transform: translate3d(calc(var(--card-shift-x, 0) * -0.54), calc(var(--card-shift-y, 0) * -0.74), 0) scale(0.76);
-    filter: blur(6px);
+    transform: translate3d(calc(var(--card-shift-x, 0) * -0.42), calc(var(--card-shift-y, 0) * -0.56), 0) scale(0.82);
   }
 }
 
@@ -279,7 +275,7 @@
 @keyframes transitionScatter {
   0% {
     opacity: 0;
-    transform: translate3d(var(--transition-from-x), var(--transition-from-y), 0) scale(0.72);
+    transform: translate3d(var(--transition-from-x), var(--transition-from-y), 0) scale(0.82);
   }
 
   18% {
@@ -288,19 +284,19 @@
 
   58% {
     opacity: 1;
-    transform: translate3d(var(--transition-mid-x), var(--transition-mid-y), 0) scale(1.08);
+    transform: translate3d(var(--transition-mid-x), var(--transition-mid-y), 0) scale(1);
   }
 
   100% {
     opacity: 0;
-    transform: translate3d(var(--transition-to-x), var(--transition-to-y), 0) scale(0.82);
+    transform: translate3d(var(--transition-to-x), var(--transition-to-y), 0) scale(0.86);
   }
 }
 
 @keyframes transitionGather {
   0% {
     opacity: 0;
-    transform: translate3d(var(--transition-to-x), var(--transition-to-y), 0) scale(0.72);
+    transform: translate3d(var(--transition-to-x), var(--transition-to-y), 0) scale(0.82);
   }
 
   20% {
@@ -309,12 +305,12 @@
 
   64% {
     opacity: 1;
-    transform: translate3d(var(--transition-mid-x), var(--transition-mid-y), 0) scale(1.04);
+    transform: translate3d(var(--transition-mid-x), var(--transition-mid-y), 0) scale(1);
   }
 
   100% {
     opacity: 0;
-    transform: translate3d(var(--transition-from-x), var(--transition-from-y), 0) scale(0.76);
+    transform: translate3d(var(--transition-from-x), var(--transition-from-y), 0) scale(0.84);
   }
 }
 
@@ -617,11 +613,11 @@
 }
 
 .cake-scene.is-transitioning-out .cake-scene__transition-flare {
-  animation: shimmerSparkle 0.92s ease-out both;
+  animation: shimmerSparkle 0.74s ease-out both;
 }
 
 .cake-scene.is-transitioning-out .cake-scene__transition-stream {
-  animation: launchStream 0.92s ease-out both;
+  animation: launchStream 0.74s ease-out both;
 }
 
 .cake-scene.is-transitioning-out .cake-scene__transition-stream--left {
@@ -637,7 +633,7 @@
 }
 
 .cake-scene.is-transitioning-out .cake-scene__transition-card {
-  animation: launchCard 1.04s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation: launchCard 0.82s cubic-bezier(0.22, 0.68, 0.22, 1) both;
 }
 
 .cake-scene.is-transitioning-out .cake-scene__transition-card--one {
@@ -655,8 +651,20 @@
   animation-delay: 0.22s;
 }
 
+[data-browser-profile='ios-safari'] .cake-scene.is-transitioning-out .cake-scene__transition-flare {
+  animation-duration: 0.62s;
+}
+
+[data-browser-profile='ios-safari'] .cake-scene.is-transitioning-out .cake-scene__transition-stream {
+  animation-duration: 0.64s;
+}
+
+[data-browser-profile='ios-safari'] .cake-scene.is-transitioning-out .cake-scene__transition-card {
+  animation-duration: 0.7s;
+}
+
 .scene-transition-layer--to-album .scene-transition-layer__particle {
-  animation: transitionScatter 0.92s cubic-bezier(0.22, 0.68, 0.24, 1) both;
+  animation: transitionScatter 0.82s cubic-bezier(0.22, 0.68, 0.24, 1) both;
   animation-delay: var(--transition-delay, 0ms);
 }
 
@@ -666,11 +674,16 @@
 }
 
 .scene-transition-layer--to-album .scene-transition-layer__stream {
-  animation: streamScatter 0.96s ease-out both;
+  animation: streamScatter 0.78s ease-out both;
 }
 
 .scene-transition-layer--to-cake .scene-transition-layer__stream {
   animation: streamGather 0.96s ease-out both;
+}
+
+[data-browser-profile='ios-safari'] .scene-transition-layer--to-album .scene-transition-layer__particle,
+[data-browser-profile='ios-safari'] .scene-transition-layer--to-album .scene-transition-layer__stream {
+  animation-duration: 0.68s;
 }
 
 .scene-transition-layer.is-settling-out {
@@ -683,7 +696,7 @@
 }
 
 .album-scene.is-entering .album-card-layer__inner {
-  animation: albumLayerSettle 0.92s ease-out both;
+  animation: albumLayerSettle 0.64s ease-out both;
 }
 
 .album-scene.is-entering .album-card-layer--background .album-card-layer__inner {
@@ -698,13 +711,21 @@
   animation-delay: 0.28s;
 }
 
+[data-browser-profile='ios-safari'] .album-scene.is-entering .album-card-layer__inner {
+  animation-duration: 0.52s;
+}
+
 .album-card__entry.is-entering {
-  animation: albumCardRise 0.88s cubic-bezier(0.18, 0.74, 0.24, 1) both;
+  animation: albumCardRise 0.68s cubic-bezier(0.2, 0.7, 0.24, 1) both;
   animation-delay: var(--card-delay, 0ms);
 }
 
+[data-browser-profile='ios-safari'] .album-card__entry.is-entering {
+  animation-duration: 0.56s;
+}
+
 .album-card__entry.is-exiting {
-  animation: albumCardReturn 0.74s cubic-bezier(0.2, 0.7, 0.24, 1) both;
+  animation: albumCardReturn 0.6s cubic-bezier(0.22, 0.68, 0.24, 1) both;
   animation-delay: var(--card-delay, 0ms);
 }
 

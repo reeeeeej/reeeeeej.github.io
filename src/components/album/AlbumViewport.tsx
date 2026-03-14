@@ -220,7 +220,8 @@ export function AlbumViewport({
   profile,
   children,
 }: AlbumViewportProps) {
-  const { viewportRef, handlers, canOpenCard, isDragging } = useAlbumRotation(active);
+  const { viewportRef, handlers, canOpenCard, isDragging } =
+    useAlbumRotation(active);
   const config = profileConfig[profile];
   const outlineParticles = useMemo(
     () => createOutlineParticles(config.outlineCount),

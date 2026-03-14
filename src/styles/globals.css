@@ -266,21 +266,21 @@ img {
   background:
     radial-gradient(circle, rgba(255, 247, 252, 0.22), transparent 34%),
     radial-gradient(circle at 50% 56%, rgba(198, 232, 255, 0.22), transparent 62%);
-  filter: blur(28px);
+  filter: blur(18px);
 }
 
 .scene-transition-layer__flare--inner {
   width: 42%;
   height: 28%;
   background: radial-gradient(circle, rgba(255, 255, 255, 0.24), transparent 66%);
-  filter: blur(18px);
+  filter: blur(12px);
 }
 
 .scene-transition-layer__core {
   width: 18%;
   height: 18%;
   background: radial-gradient(circle, rgba(255, 255, 255, 0.46), rgba(207, 235, 255, 0.12) 58%, transparent 70%);
-  filter: blur(10px);
+  filter: blur(6px);
 }
 
 .scene-transition-layer__particle,
@@ -293,7 +293,7 @@ img {
   margin-left: calc(-0.5 * var(--particle-size, 4px));
   margin-top: calc(-0.5 * var(--particle-size, 4px));
   opacity: 0;
-  box-shadow: 0 0 12px currentColor;
+  box-shadow: 0 0 8px currentColor;
   will-change: transform, opacity;
 }
 
@@ -324,7 +324,7 @@ img {
   height: 34%;
   transform: translate(-50%, -50%);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(231, 246, 255, 0.92) 48%, rgba(255, 216, 238, 0));
-  box-shadow: 0 0 18px rgba(191, 231, 255, 0.24);
+  box-shadow: 0 0 10px rgba(191, 231, 255, 0.18);
   opacity: 0;
   will-change: transform, opacity;
 }
@@ -537,7 +537,7 @@ img {
   background:
     radial-gradient(circle, rgba(255, 249, 255, 0.24), transparent 34%),
     radial-gradient(circle at 50% 58%, rgba(203, 235, 255, 0.2), transparent 60%);
-  filter: blur(18px);
+  filter: blur(12px);
 }
 
 .cake-scene__transition-stream {
@@ -546,7 +546,7 @@ img {
   height: 44%;
   border-radius: 999px;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(230, 247, 255, 0.92) 48%, rgba(255, 213, 236, 0));
-  box-shadow: 0 0 18px rgba(191, 231, 255, 0.22);
+  box-shadow: 0 0 10px rgba(191, 231, 255, 0.16);
   opacity: 0;
 }
 
@@ -572,8 +572,8 @@ img {
     linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05)),
     radial-gradient(circle at 50% 12%, rgba(255, 255, 255, 0.18), transparent 34%);
   box-shadow:
-    0 18px 36px rgba(6, 5, 18, 0.26),
-    0 0 18px rgba(191, 231, 255, 0.18);
+    0 12px 22px rgba(6, 5, 18, 0.18),
+    0 0 10px rgba(191, 231, 255, 0.12);
   opacity: 0;
 }
 
@@ -1721,8 +1721,73 @@ img {
   display: none;
 }
 
+[data-device-profile='mobile-low'] .cake-scene__transition-stream--left,
+[data-device-profile='mobile-low'] .cake-scene__transition-stream--right,
+[data-device-profile='mobile-low'] .cake-scene__transition-card--one,
+[data-device-profile='mobile-low'] .cake-scene__transition-card--three {
+  display: none;
+}
+
+[data-device-profile='mobile-mid'] .cake-scene__transition-card--one,
+[data-device-profile='mobile-mid'] .cake-scene__transition-card--three {
+  opacity: 0.66;
+}
+
+[data-device-profile='mobile-high'] .cake-scene__transition-card {
+  box-shadow:
+    0 10px 18px rgba(6, 5, 18, 0.14),
+    0 0 8px rgba(191, 231, 255, 0.08);
+}
+
 [data-browser-profile='ios-safari'] .album-viewport {
   transition: opacity 420ms ease, transform 420ms ease, filter 320ms ease;
+}
+
+[data-browser-profile='ios-safari'] .cake-scene__transition-flare {
+  filter: blur(8px);
+  opacity: 0.6;
+}
+
+[data-browser-profile='ios-safari'] .cake-scene__transition-stream {
+  box-shadow: 0 0 6px rgba(191, 231, 255, 0.14);
+}
+
+[data-browser-profile='ios-safari'] .cake-scene__transition-stream--left,
+[data-browser-profile='ios-safari'] .cake-scene__transition-stream--right {
+  opacity: 0.56;
+}
+
+[data-browser-profile='ios-safari'] .cake-scene__transition-card {
+  box-shadow:
+    0 8px 14px rgba(6, 5, 18, 0.14),
+    0 0 6px rgba(191, 231, 255, 0.08);
+}
+
+[data-browser-profile='ios-safari'] .cake-scene__transition-card--one,
+[data-browser-profile='ios-safari'] .cake-scene__transition-card--three {
+  opacity: 0.62;
+}
+
+[data-browser-profile='ios-safari'] .scene-transition-layer__flare--outer {
+  display: none;
+}
+
+[data-browser-profile='ios-safari'] .scene-transition-layer__flare--inner {
+  filter: blur(10px);
+  opacity: 0.7;
+}
+
+[data-browser-profile='ios-safari'] .scene-transition-layer__core {
+  filter: blur(4px);
+  opacity: 0.82;
+}
+
+[data-browser-profile='ios-safari'] .scene-transition-layer__particle {
+  box-shadow: 0 0 5px currentColor;
+}
+
+[data-browser-profile='ios-safari'] .scene-transition-layer__stream {
+  box-shadow: 0 0 6px rgba(191, 231, 255, 0.12);
 }
 
 [data-browser-profile='ios-safari'] .album-viewport__stage {
@@ -1792,19 +1857,19 @@ img {
 }
 
 [data-browser-profile='ios-safari'] .album-scene.is-entering .album-card-layer--background .album-card-layer__inner {
-  transform: translate3d(0, -4px, -18px) scale(0.94);
+  transform: translate3d(0, -2px, -10px) scale(0.96);
 }
 
 [data-browser-profile='ios-safari'] .album-scene.is-entering .album-card-layer--midground .album-card-layer__inner {
-  transform: translate3d(0, -2px, -8px) scale(0.96);
+  transform: translate3d(0, -1px, -5px) scale(0.98);
 }
 
 [data-browser-profile='ios-safari'] .album-scene.is-entering .album-card-layer--foreground .album-card-layer__inner {
-  transform: translate3d(0, 2px, 2px) scale(0.98);
+  transform: translate3d(0, 1px, 1px) scale(0.99);
 }
 
 [data-browser-profile='ios-safari'] .album-scene.is-entering .album-card__entry {
-  transform: translate3d(calc(var(--card-shift-x, 0) * 0.42), calc(var(--card-shift-y, 0) * 0.42), 0) scale(0.94);
+  transform: translate3d(calc(var(--card-shift-x, 0) * 0.28), calc(var(--card-shift-y, 0) * 0.28), 0) scale(0.96);
   filter: none;
 }
 
@@ -1911,33 +1976,33 @@ img {
 }
 
 .album-scene.is-entering .album-card-layer--background .album-card-layer__inner {
-  transform: translate3d(0, -8px, -56px) scale(0.84);
+  transform: translate3d(0, -4px, -34px) scale(0.9);
 }
 
 .album-scene.is-entering .album-card-layer--midground .album-card-layer__inner {
-  transform: translate3d(0, -4px, -18px) scale(0.9);
+  transform: translate3d(0, -2px, -12px) scale(0.94);
 }
 
 .album-scene.is-entering .album-card-layer--foreground .album-card-layer__inner {
-  transform: translate3d(0, 4px, 4px) scale(0.92);
+  transform: translate3d(0, 2px, 2px) scale(0.96);
 }
 
 .album-scene.is-entering .album-card__entry {
   opacity: 0;
-  transform: translate3d(calc(var(--card-shift-x, 0) + var(--card-drift, 0)), var(--card-shift-y, 0), 0) scale(0.72);
-  filter: blur(8px);
+  transform: translate3d(calc(var(--card-shift-x, 0) * 0.72), calc(var(--card-shift-y, 0) * 0.72), 0) scale(0.88);
+  filter: none;
 }
 
 .album-scene.is-exiting .album-scene__header {
   opacity: 0;
-  transform: translateY(12px) scale(0.985);
-  filter: blur(8px);
+  transform: translateY(8px) scale(0.99);
+  filter: none;
 }
 
 .album-scene.is-exiting .album-viewport {
   opacity: 0.34;
-  transform: scale(0.95);
-  filter: blur(4px);
+  transform: scale(0.97);
+  filter: none;
 }
 
 .album-scene.is-exiting .album-card-layer--background .album-card-layer__inner {
@@ -1954,8 +2019,8 @@ img {
 
 .album-card__entry.is-exiting {
   opacity: 0;
-  transform: translate3d(calc(var(--card-shift-x, 0) * -0.66), calc(var(--card-shift-y, 0) * -0.9), 0) scale(0.64);
-  filter: blur(8px);
+  transform: translate3d(calc(var(--card-shift-x, 0) * -0.42), calc(var(--card-shift-y, 0) * -0.56), 0) scale(0.82);
+  filter: none;
 }
 
 .album-scene.is-active .album-card__entry {
