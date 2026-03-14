@@ -1743,6 +1743,23 @@ img {
   transition: opacity 420ms ease, transform 420ms ease, filter 320ms ease;
 }
 
+[data-browser-profile='ios-safari'] .cake-scene.is-transitioning-out .cake-scene__transition,
+[data-browser-profile='ios-safari'] .scene-transition-layer--to-album {
+  display: none;
+}
+
+[data-browser-profile='ios-safari'] .cake-scene.is-transitioning-out .cake-scene__copy,
+[data-browser-profile='ios-safari'] .cake-scene.is-transitioning-out .hint-text {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
+[data-browser-profile='ios-safari'] .cake-scene.is-transitioning-out .cake-scene__button {
+  opacity: 0.18;
+  transform: translateY(-6px) scale(0.985);
+  filter: none;
+}
+
 [data-browser-profile='ios-safari'] .cake-scene__transition-flare {
   filter: blur(8px);
   opacity: 0.6;
@@ -1857,20 +1874,25 @@ img {
 }
 
 [data-browser-profile='ios-safari'] .album-scene.is-entering .album-card-layer--background .album-card-layer__inner {
-  transform: translate3d(0, -2px, -10px) scale(0.96);
+  transform: none;
 }
 
 [data-browser-profile='ios-safari'] .album-scene.is-entering .album-card-layer--midground .album-card-layer__inner {
-  transform: translate3d(0, -1px, -5px) scale(0.98);
+  transform: none;
 }
 
 [data-browser-profile='ios-safari'] .album-scene.is-entering .album-card-layer--foreground .album-card-layer__inner {
-  transform: translate3d(0, 1px, 1px) scale(0.99);
+  transform: none;
 }
 
 [data-browser-profile='ios-safari'] .album-scene.is-entering .album-card__entry {
-  transform: translate3d(calc(var(--card-shift-x, 0) * 0.28), calc(var(--card-shift-y, 0) * 0.28), 0) scale(0.96);
+  transform: translate3d(0, 0, 0) scale(1);
   filter: none;
+}
+
+[data-browser-profile='ios-safari'] .album-scene.is-entering .album-viewport,
+[data-browser-profile='ios-safari'] .album-scene.is-entering .album-scene__header {
+  animation: safariAlbumFadeIn 0.42s ease-out both;
 }
 
 [data-browser-profile='ios-safari'] .album-scene.is-exiting .album-scene__header {

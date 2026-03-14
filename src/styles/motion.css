@@ -446,6 +446,18 @@
   }
 }
 
+@keyframes safariAlbumFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.992);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 @keyframes tierRelease {
   0% {
     opacity: 1;
@@ -712,7 +724,7 @@
 }
 
 [data-browser-profile='ios-safari'] .album-scene.is-entering .album-card-layer__inner {
-  animation-duration: 0.52s;
+  animation: none;
 }
 
 .album-card__entry.is-entering {
@@ -721,7 +733,7 @@
 }
 
 [data-browser-profile='ios-safari'] .album-card__entry.is-entering {
-  animation-duration: 0.56s;
+  animation: none;
 }
 
 .album-card__entry.is-exiting {

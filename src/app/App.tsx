@@ -80,29 +80,23 @@ export function App() {
     const coverSources = Array.from(
       new Set(cards.map((card) => card.coverImage || card.image).filter(Boolean)),
     );
-    const timers: number[] = [];
-
     const startPreload = () => {
       coverSources.forEach((src, index) => {
-        const timer = window.setTimeout(() => {
-          const image = new Image();
-          image.decoding = 'async';
-          image.fetchPriority = index < 6 ? 'high' : 'low';
-          image.src = src;
-          if (typeof image.decode === 'function') {
-            void image.decode().catch(() => undefined);
-          }
-        }, index * 90);
-
-        timers.push(timer);
+        const image = new Image();
+        image.decoding = 'async';
+        image.fetchPriority = index < 8 ? 'high' : 'auto';
+        image.loading = 'eager';
+        image.src = src;
+        if (typeof image.decode === 'function') {
+          void image.decode().catch(() => undefined);
+        }
       });
     };
 
-    const kickoff = window.setTimeout(startPreload, 120);
+    const kickoff = window.setTimeout(startPreload, 80);
 
     return () => {
       window.clearTimeout(kickoff);
-      timers.forEach((timer) => window.clearTimeout(timer));
     };
   }, [sceneStage]);
 
