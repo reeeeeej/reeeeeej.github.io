@@ -218,6 +218,7 @@ export function App() {
           <AlbumScene
             cards={cards}
             profile={deviceProfile}
+            browserProfile={browserProfile}
             selectedCardId={selectedCardId}
             active={
               albumVisualState === 'active' || sceneStage === 'detail'

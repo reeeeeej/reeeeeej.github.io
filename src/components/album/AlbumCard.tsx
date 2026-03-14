@@ -1,10 +1,12 @@
 import type { MouseEvent } from 'react';
 import type { HeartLayoutCard } from '../../hooks/useHeartLayout3D';
 import type { DeviceProfile } from '../../types/scene';
+import type { BrowserProfile } from '../../utils/browser';
 
 interface AlbumCardProps {
   card: HeartLayoutCard;
   profile: DeviceProfile;
+  browserProfile: BrowserProfile;
   entering: boolean;
   exiting: boolean;
   entryIndex: number;
@@ -16,6 +18,7 @@ interface AlbumCardProps {
 export function AlbumCard({
   card,
   profile,
+  browserProfile,
   entering,
   exiting,
   entryIndex,
@@ -45,12 +48,19 @@ export function AlbumCard({
 
   const scaleByDepth =
     card.depthGroup === 'foreground' ? 1.03 : card.depthGroup === 'midground' ? 0.98 : 0.93;
-  const showDust = profile === 'desktop' && card.depthGroup !== 'background';
+  const showDust =
+    profile === 'desktop' &&
+    browserProfile !== 'ios-safari' &&
+    card.depthGroup !== 'background';
   const mobileTiltX = isMobileProfile ? 0.4 : 1.1;
   const mobileYaw = isMobileProfile ? card.yawAngle * 0.32 : card.yawAngle ?? 0;
   const mobilePitch = isMobileProfile ? card.pitchAngle * 0.25 : card.pitchAngle ?? 0;
   const mobileTwist = isMobileProfile ? card.twistFactor * 0.38 : card.twistFactor;
   const mobileZ = isMobileProfile ? Math.round((card.z ?? 0) * 0.45) : card.z ?? 0;
+  const isIosSafari = browserProfile === 'ios-safari';
+  const cardTransform = isIosSafari
+    ? `translate(-50%, -50%) rotate(${card.rotation ?? 0}deg) scale(${scaleByDepth})`
+    : `translate3d(-50%, -50%, ${mobileZ}px) rotate(${card.rotation ?? 0}deg) rotateY(${mobileYaw}deg) rotateX(${mobilePitch}deg) rotateY(calc(var(--album-nx, 0) * ${mobileTwist} * 1deg)) rotateX(calc(var(--album-ny, 0) * -${mobileTiltX}deg)) scale(${scaleByDepth})`;
 
   return (
     <button
@@ -60,7 +70,7 @@ export function AlbumCard({
       style={{
         left: `${card.x ?? 50}%`,
         top: `${card.y ?? 50}%`,
-        transform: `translate3d(-50%, -50%, ${mobileZ}px) rotate(${card.rotation ?? 0}deg) rotateY(${mobileYaw}deg) rotateX(${mobilePitch}deg) rotateY(calc(var(--album-nx, 0) * ${mobileTwist} * 1deg)) rotateX(calc(var(--album-ny, 0) * -${mobileTiltX}deg)) scale(${scaleByDepth})`,
+        transform: cardTransform,
         zIndex: Math.round(mobileZ + (card.y ?? 0)),
         ['--card-delay' as string]: `${entryIndex * 28}ms`,
         ['--card-shift-x' as string]: `${((card.x ?? 50) - 50) * 0.34}%`,

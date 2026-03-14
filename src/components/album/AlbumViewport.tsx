@@ -1,6 +1,7 @@
 import { useMemo, type ReactNode } from 'react';
 import { useAlbumRotation } from '../../hooks/useAlbumRotation';
 import type { DeviceProfile } from '../../types/scene';
+import type { BrowserProfile } from '../../utils/browser';
 
 function heartCurve(t: number) {
   const x = 16 * Math.sin(t) ** 3;
@@ -210,6 +211,7 @@ interface AlbumViewportProps {
   entering: boolean;
   exiting: boolean;
   profile: DeviceProfile;
+  browserProfile: BrowserProfile;
   children: (controls: AlbumViewportRenderProps) => ReactNode;
 }
 
@@ -218,10 +220,11 @@ export function AlbumViewport({
   entering,
   exiting,
   profile,
+  browserProfile,
   children,
 }: AlbumViewportProps) {
   const { viewportRef, handlers, canOpenCard, isDragging } =
-    useAlbumRotation(active);
+    useAlbumRotation(active && browserProfile !== 'ios-safari');
   const config = profileConfig[profile];
   const outlineParticles = useMemo(
     () => createOutlineParticles(config.outlineCount),

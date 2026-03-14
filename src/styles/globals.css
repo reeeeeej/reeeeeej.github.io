@@ -1885,7 +1885,12 @@ img {
   transform: none;
 }
 
+[data-browser-profile='ios-safari'] .album-scene.is-entering .album-card-layer__inner {
+  opacity: 1;
+}
+
 [data-browser-profile='ios-safari'] .album-scene.is-entering .album-card__entry {
+  opacity: 1;
   transform: translate3d(0, 0, 0) scale(1);
   filter: none;
 }

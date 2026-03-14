@@ -4,9 +4,11 @@ import {
   ALBUM_TO_CAKE_TRANSITION_MS,
   CAKE_TO_ALBUM_TRANSITION_MS,
 } from '../utils/animation';
+import { detectBrowserProfile } from '../utils/browser';
 
 export function useSceneStage() {
   const { state, dispatch } = useAppStateContext();
+  const browserProfile = detectBrowserProfile();
 
   const beginCakeScene = () => {
     if (state.isTransitioning || state.sceneStage !== 'intro') {
@@ -29,7 +31,7 @@ export function useSceneStage() {
 
     window.setTimeout(() => {
       dispatch({ type: 'complete_transition_to_album' });
-    }, state.reducedMotionPreferred ? 250 : CAKE_TO_ALBUM_TRANSITION_MS);
+    }, state.reducedMotionPreferred ? 250 : browserProfile === 'ios-safari' ? 720 : CAKE_TO_ALBUM_TRANSITION_MS);
   };
 
   const beginCakeReturn = () => {
